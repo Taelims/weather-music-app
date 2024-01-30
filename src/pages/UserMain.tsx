@@ -74,7 +74,6 @@ function App() {
       </SecondWeatherBoxContainer>
 
       <CardContainer>
-
         {
           items.map((item, index)=>(
             <CardCom item = {item}  key={index}/>

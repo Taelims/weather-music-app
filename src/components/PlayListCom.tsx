@@ -1,15 +1,14 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import styled from 'styled-components'
 
 
 
-interface UserListProps {
+interface PlayListProps {
   width: number;
   height: number;
 }
 
-function PlayListCom({width, height} : UserListProps) {
+function PlayListCom({width, height} : PlayListProps) {
   return (
     <Card style={{ width: `${width}rem`, height: `${height}rem` }}>
       <Card.Body>

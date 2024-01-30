@@ -1,5 +1,5 @@
 import {createGlobalStyle} from "styled-components";
-import bg from './asset/back.jpg'
+import bg from './asset/mainbackground.jpg'
 
 const GlobalStyles = createGlobalStyle`
  a {
@@ -9,7 +9,6 @@ const GlobalStyles = createGlobalStyle`
 
  body {
    font-family: apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-   //background-image: url(../public/asset/background.jpg);
    background-image: url(${bg});
    background-repeat: no-repeat;
    background-position: top center;
