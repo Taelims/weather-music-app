@@ -14,6 +14,7 @@ function App() {
         <NavBarCom/>
         <ReactRoute/>
         <GlobalStyles />
+        asd
       </RecoilRoot>
     </>
   );
