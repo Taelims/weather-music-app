@@ -16,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
    background-attachment: fixed;
    
    margin: 0 auto;
-   width: 70vw;
+   width: 80vw;
    height: 200vh;
    box-shadow: inset 0 0 20px
  }`;
