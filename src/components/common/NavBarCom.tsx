@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import ModalCom from './ModalCom'
@@ -20,8 +19,7 @@ function NavBarCom() {
             <Nav.Link className="text-white" href="#pricing">Pricing</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link className="text-white" onClick={()=>setShow(true)}>새 글 쓰기</Nav.Link>
-            {/*<Nav.Link as={Link} to="/write">새 글 쓰기</Nav.Link>*/}
+            {/*<Nav.Link className="text-white" onClick={()=>setShow(true)}>새 글 쓰기</Nav.Link>*/}
             <Nav.Link className="text-white" eventKey={2} href="#memes">
               Login
             </Nav.Link>

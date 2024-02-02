@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import WeatherCom from '../components/WeatherCom'
-import PlayListCom from '../components/PlayListCom'
+import PlayListCom from '../components/common/PlayListCom'
 import { Link } from 'react-router-dom'
 import { useGeoLocation } from '../hooks/useGeoLocation'
 import { weatherState } from '../store/atom/weatherState'
 import TabCom from '../components/TabCom'
+import { playListState } from '../store/atom/playListState'
+import WeatherInfo from '../Types/state/weatherStateType'
 
 
 const WeatherBoxContainer = styled.div`
@@ -38,38 +40,55 @@ const TabContainer = styled.div`
   margin-top: 150px;
 `;
 
-interface WeatherInfo {
-  main: string,
-  temp: string,
-}
-
 
 function UserMain() {
+  let [tab, setTab] = useState(0)
   const [weather, setWeather] = useRecoilState<WeatherInfo>(weatherState)
+  const [playList, setPlayList] = useRecoilState(playListState)
 
   const geolocationOptions = {
-    enableHighAccuracy: true,
-    timeout: 1000 * 10,
-    maximumAge: 1000 * 3600 * 24,
+    enableHighAccuracy: false,
+    timeout: 180000,
+    maximumAge: 7000,
   }
 
-  const { location, error } = useGeoLocation(geolocationOptions)
+  const { location, error } = useGeoLocation(geolocationOptions);
 
   const fetchData = async () => {
-    const res = await axios.get("/api/weather");
-    return res.data;
-  };
+    if(location){
+      const weatherRes = await axios.get("api/v1/user/media", {
+        params: {
+          latitude: location.latitude,
+          longitude: location.longitude
+        }
+      })
+      const playListRes = await axios.get("api/v1/user/media/video", {
+        params: {
+          latitude: location.latitude,
+          longitude: location.longitude
+        }
+      })
+      return{ weatherRes : weatherRes.data.result , playListRes : playListRes.data.result }
 
+    }
+  }
   const { isLoading } = useQuery("item", fetchData, {
-    onSuccess: (data) => setWeather(data)
+      onSuccess: (data) => {
+        if(data){
+          setWeather(data.weatherRes)
+          setPlayList(data.playListRes)
+        }
+      },
+      enabled: !!location
     }
   )
 
   if (isLoading) return <>Loading...</>
 
+
   return (
     <>
-      <div style={{ color: 'white' }}> {location ? location.latitude + ', ' +  location.longitude  : error} </div>
+      <div style={{ color: 'white' }}> </div>
       <WeatherBoxContainer>
         <WeatherCom />
         <Link to="/playlist"> <PlayListCom width={20} height={20} /> </Link>
@@ -77,7 +96,6 @@ function UserMain() {
 
       <TabContainer>
         <TabCom />
-
       </TabContainer>
 
       <SecondWeatherBoxContainer>

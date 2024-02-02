@@ -5,8 +5,8 @@ import { useRecoilValue } from 'recoil'
 import { weatherState } from '../store/atom/weatherState'
 
 interface WeatherInfo {
-  main: string,
-  temp: string,
+  weather: { main: string }[];
+  main: { temp: number };
 }
 
 function WeatherCom() {
@@ -15,9 +15,9 @@ function WeatherCom() {
   return (
     <Card style={{ width: '20rem', height:'20rem', backgroundImage: `url(${cleardayImage})`, backgroundSize: 'cover', backgroundPosition: 'center', borderColor: 'rgb(54,53,53)' }}>
       <Card.Body style = {{color: 'white', textAlign: 'center', fontSize: '2rem' , marginTop: '90px' }}>
-        <Card.Title style = {{ fontSize: '2rem' }}>{weather.main}</Card.Title>
+        <Card.Title style = {{ fontSize: '2rem' }}>{weather.weather[0].main}</Card.Title>
         <Card.Text style = {{ fontSize: '1.5rem', marginTop: '25px' }}>
-          <strong> 현재 온도  {weather.temp}&#8451; </strong>
+          <strong> 현재 온도  {weather.main.temp}&#8451; </strong>
         </Card.Text>
       </Card.Body>
     </Card>

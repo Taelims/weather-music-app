@@ -3,7 +3,13 @@ import { atom } from "recoil";
 export const weatherState = atom({
   key: "weatherState",
   default: {
-    main: '',
-    temp: '',
+    weather: [
+      {
+        main: ''
+      }
+    ],
+    main: {
+      temp: 0
+    }
   }
 })
