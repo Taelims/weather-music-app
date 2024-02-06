@@ -35,8 +35,8 @@
   border-radius: 10px !important;
 }
 
-.song-list-item {
-  background-color: black;
-  color: white;
-  border-color: black;
+.list-group-item {
+  background-color: black !important;
+  color: white !important;
+  border-color: black !important;
 }

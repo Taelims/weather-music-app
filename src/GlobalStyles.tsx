@@ -9,9 +9,10 @@ const GlobalStyles = createGlobalStyle`
 
  body {
    font-family: apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-   background-image: url(${bg});
+   //background-image: url(${bg});
+   background-color: black;
    background-repeat: no-repeat;
-   background-position: top center;
+   background-position: center;
    background-size: cover;
    background-attachment: fixed;
    

@@ -7,7 +7,7 @@ function ReactRoute() {
   return(
     <Routes>
       <Route path="/" element={<UserMain />} />
-      <Route path="/playlist" element={<PlayListDetail />} />
+      <Route path="/playlist/:id" element={<PlayListDetail />} />
     </Routes>
   )
 }

@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { useRecoilValue } from 'recoil'
-import { playListState } from '../store/atom/playListState'
+import { categoryPlayListState, weatherPlayListState } from '../store/atom/playListState'
+import { useParams } from 'react-router-dom'
 
 function PlayListDetail() {
   const [videoId, setVideoId] = useState('');
-  const playList = useRecoilValue(playListState)
+  const params = useParams();
+  const playList = useRecoilValue(params.id === 'weather' ? weatherPlayListState : categoryPlayListState )
 
   const handleSongClick = (songVideoId : any) => {
     setVideoId(songVideoId);
   };
 
   useEffect(()=>{
-    setVideoId(playList.items[0].id.videoId)
+    setVideoId(playList.item[0].videoId)
   },[])
 
   return (
@@ -35,15 +37,15 @@ function PlayListDetail() {
       <div className="song-list-area">
         <ListGroup as="ul" className='song-list'>
           {
-            playList.items.map((item, index)=>(
-              <ListGroup.Item key={index} as="li" onClick={() => handleSongClick(item.id.videoId)}>
+            playList.item.map((item, index)=>(
+              <ListGroup.Item className= 'list-group-item' key={index} as="li" onClick={() => handleSongClick(item.videoId)}>
                 <img
-                  src={item.snippet.thumbnails.medium.url}
+                  src={item.url}
                   alt="Thumbnail"
-                  className="img-thumbnail "
-                  style={{ width: "50px", height: "50px" }} // 이미지 크기 조정을 위한 스타일
+                  // className="img-thumbnail "
+                  style={{ width: "50px", height: "50px" }}
                 />
-                {" " + item.snippet.title }
+                {" " + item.title }
               </ListGroup.Item>
             ))
           }

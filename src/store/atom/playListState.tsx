@@ -1,22 +1,27 @@
 import { atom } from "recoil";
 
-export const playListState = atom({
-  key: "playListState",
+export const weatherPlayListState = atom({
+  key: "weatherPlayListState",
   default: {
-    items: [
+    item: [
       {
-        id: {
-           videoId : ''
-        },
-        snippet: {
-          title: '',
-          thumbnails: {
-            medium: {
-              url: ''
-            }
-          }
-        }
-      }
+        videoId : '',
+        title: '',
+        url: ''
+      },
+    ],
+  }
+})
+
+export const categoryPlayListState = atom({
+  key: "categoryPlayListState",
+  default: {
+    item: [
+      {
+        videoId : '',
+        title: '',
+        url: ''
+      },
     ],
   }
 })
