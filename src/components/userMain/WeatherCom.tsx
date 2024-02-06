@@ -1,10 +1,10 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import cleardayImage from '../asset/clearday.jpg';
-import rainydayImage from '../asset/rainy.jpg';
+import cleardayImage from '../../asset/clearday.jpg';
+import rainydayImage from '../../asset/rainy.jpg';
 import { useRecoilValue } from 'recoil'
-import { weatherState } from '../store/atom/weatherState'
-import { WeatherState } from '../types/state/stateType'
+import { weatherState } from '../../store/atom/weatherState'
+import { WeatherState } from '../../types/state/stateType'
 
 
 function WeatherCom() {
