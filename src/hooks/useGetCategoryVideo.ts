@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import icAxios from '../util/icAxios'
 
 
 const fetchVideo = async (tab : string)=> {
-  const playListRes = await axios.get("api/v1/user/media/video", {
+  const playListRes = await icAxios.get("api/v1/user/media/video", {
     params: {
       keyword: tab,
     }

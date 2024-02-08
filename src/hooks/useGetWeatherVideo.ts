@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from 'react-query'
-import axios from 'axios'
+import icAxios from '../util/icAxios'
 
 
 const fetchVideo = async (weatherData : any)=> {
   let keyword = weatherData.weather
   keyword = keyword === 'Clear' ? '맑은 날씨 음악' : '흐린 날씨 음악';
-  const playListRes = await axios.get("api/v1/user/media/video", {
+  const playListRes = await icAxios.get("api/v1/user/media/video", {
     params: {
       keyword: keyword,
     }
