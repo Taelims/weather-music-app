@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { ListGroup } from 'react-bootstrap'
-import { useRecoilValue } from 'recoil'
-import { categoryPlayListState, weatherPlayListState } from '../store/atom/playListState'
 import { useParams } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 
 function PlayListDetail() {
-  const [videoId, setVideoId] = useState('');
   const params = useParams();
-  const playList = useRecoilValue(params.id === 'weather' ? weatherPlayListState : categoryPlayListState )
+  const queryClient = useQueryClient();
+  const playList : any = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] );
+  const [videoId, setVideoId] = useState('');
 
   const handleSongClick = (songVideoId : any) => {
     setVideoId(songVideoId);
@@ -37,7 +37,7 @@ function PlayListDetail() {
       <div className="song-list-area">
         <ListGroup as="ul" className='song-list'>
           {
-            playList.item.map((item, index)=>(
+            playList.item.map((item: any, index: any)=>(
               <ListGroup.Item className= 'list-group-item' key={index} as="li" onClick={() => handleSongClick(item.videoId)}>
                 <img
                   src={item.url}
