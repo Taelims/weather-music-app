@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { useQueryClient } from 'react-query'
+import { QueryClient, useQueryClient } from 'react-query'
+import { playList } from '../types/page/playListDetailType'
 
 function PlayListDetail() {
-  const params = useParams();
-  const queryClient = useQueryClient();
-  const playList : any = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] );
-  const [videoId, setVideoId] = useState('');
+  const [videoId, setVideoId] = useState<string>('');
+  const params = useParams<string>();
+  const queryClient: QueryClient = useQueryClient();
+  const playList : playList | undefined = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] );
 
-  const handleSongClick = (songVideoId : any) => {
+  const handleSongClick = (songVideoId : string) => {
     setVideoId(songVideoId);
   };
 
   useEffect(()=>{
-    setVideoId(playList.item[0].videoId)
+    if(playList){
+      setVideoId(playList.item[0].videoId)
+    }
   },[])
 
   return (
@@ -37,7 +40,7 @@ function PlayListDetail() {
       <div className="song-list-area">
         <ListGroup as="ul" className='song-list'>
           {
-            playList.item.map((item: any, index: any)=>(
+            playList?.item.map((item: playList['item'][number], index: number)=>(
               <ListGroup.Item className= 'list-group-item' key={index} as="li" onClick={() => handleSongClick(item.videoId)}>
                 <img
                   src={item.url}

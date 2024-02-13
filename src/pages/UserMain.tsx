@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import TabCom from '../components/userMain/TabCom'
 import { useGetWeatherVideo } from '../hooks/useGetWeatherVideo'
 import { useGetWeather } from '../hooks/useGetWeather'
+import { weatherQuery, weatherVideoQuery } from '../types/page/userMainType'
 
 
 const WeatherBoxContainer = styled.div`
@@ -23,15 +24,15 @@ const TabContainer = styled.div`
 
 
 function UserMain() {
-  const weatherData = useGetWeather()
-  const weatherVideoData = useGetWeatherVideo()
+  const weatherData: weatherQuery = useGetWeather()
+  const weatherVideoData: weatherVideoQuery = useGetWeatherVideo()
 
   return (
     <>
-      <div style={{ color: 'white' }}> </div>
+      <div style = {{ color: 'white' }}> </div>
       <WeatherBoxContainer>
         <WeatherCom data = {weatherData.data}/>
-        <Link to="/playlist/weather"> <PlayListCom data ={weatherVideoData.data}  key={0} index={0} width={20} height={20} /> </Link>
+        <Link to="/playlist/weather"> <PlayListCom data ={weatherVideoData.data}  key={0} idx={0} width={20} height={20} /> </Link>
       </WeatherBoxContainer>
 
       <TabContainer>

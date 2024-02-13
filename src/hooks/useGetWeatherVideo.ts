@@ -1,9 +1,10 @@
 import { useQuery, useQueryClient } from 'react-query'
 import icAxios from '../util/icAxios'
+import { weatherInfo } from '../types/components/weatherComType'
 
 
-const fetchVideo = async (weatherData : any)=> {
-  let keyword = weatherData.weather
+const fetchVideo = async (weatherData : weatherInfo['data'] | undefined)=> {
+  let keyword = weatherData?.weather
   keyword = keyword === 'Clear' ? '맑은 날씨 음악' : '흐린 날씨 음악';
   const playListRes = await icAxios.get("api/v1/user/media/video", {
     params: {
@@ -16,7 +17,7 @@ const fetchVideo = async (weatherData : any)=> {
 
 export const useGetWeatherVideo = () => {
   const queryClient = useQueryClient();
-  const weatherData : any = queryClient.getQueryData('weather');
+  const weatherData : weatherInfo['data'] | undefined = queryClient.getQueryData('weather');
 
   const { isLoading, isError, data } = useQuery(
     "weatherVideo", () => fetchVideo(weatherData), {

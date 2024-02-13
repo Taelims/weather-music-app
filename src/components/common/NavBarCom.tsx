@@ -7,7 +7,7 @@ import ModalCom from './ModalCom'
 
 
 function NavBarCom() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
   return (
     <Navbar collapseOnSelect expand="lg">
       <Container>

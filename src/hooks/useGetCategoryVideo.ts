@@ -11,7 +11,7 @@ const fetchVideo = async (tab : string)=> {
   return playListRes.data.result
 }
 
-export const useGetCategoryVideo = (tab : any) => {
+export const useGetCategoryVideo = (tab : string) => {
   const { isLoading, isError, data } = useQuery(
     ["categoryVideo", tab], () => fetchVideo(tab), {
       enabled: !!tab

@@ -1,9 +1,10 @@
 import { useQuery } from 'react-query'
 import { useGeoLocation } from './useGeoLocation'
 import icAxios from '../util/icAxios'
+import { locationInfo } from '../types/page/userMainType'
 
 
-const fetchWeather = async (location : any) => {
+const fetchWeather = async (location : locationInfo | undefined) => {
   if(location){
     const weatherRes = await icAxios.get("api/v1/user/media/weather", {
       params: {
