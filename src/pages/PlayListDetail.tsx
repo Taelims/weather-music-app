@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { QueryClient, useQueryClient } from 'react-query'
-import { playList } from '../types/page/playListDetailType'
+import { playList, playListItem } from '../types/page/playListDetailType'
 
 function PlayListDetail() {
   const [videoId, setVideoId] = useState<string>('');
   const params = useParams<string>();
   const queryClient: QueryClient = useQueryClient();
-  const playList : playList | undefined = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] );
+  const playList : playList = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
 
   const handleSongClick = (songVideoId : string) => {
     setVideoId(songVideoId);
@@ -40,7 +40,7 @@ function PlayListDetail() {
       <div className="song-list-area">
         <ListGroup as="ul" className='song-list'>
           {
-            playList?.item.map((item: playList['item'][number], index: number)=>(
+            playList?.item.map((item: playListItem, index: number)=>(
               <ListGroup.Item className= 'list-group-item' key={index} as="li" onClick={() => handleSongClick(item.videoId)}>
                 <img
                   src={item.url}

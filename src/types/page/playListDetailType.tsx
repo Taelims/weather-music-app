@@ -1,7 +1,10 @@
+export type playListItem= {
+  videoId: string
+  title: string
+  url: string
+}
+
 export interface playList {
-  item: {
-    videoId: string
-    title: string
-    url: string
-  }[]
+  playListName: string,
+  item: playListItem[]
 }

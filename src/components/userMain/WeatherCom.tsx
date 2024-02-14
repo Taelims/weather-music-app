@@ -5,7 +5,7 @@ import rainydayImage from '../../asset/rainy.jpg';
 import { weatherInfo } from '../../types/components/weatherComType'
 
 
-function WeatherCom({data}: weatherInfo) {
+function WeatherCom({data}: {data : weatherInfo}) {
   return (
     <Card style={{
       width: '30rem', height:'20rem',
