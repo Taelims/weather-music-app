@@ -32,7 +32,7 @@ function UserMain() {
       <div style = {{ color: 'white' }}> </div>
       <WeatherBoxContainer>
         <WeatherCom data = {weatherData.data}/>
-        <Link to="/playlist/weather"> <PlayListCom data ={weatherVideoData.data}  key={0} idx={0} width={20} height={20} /> </Link>
+        <Link to="/playlist/weather"> <PlayListCom data ={weatherVideoData.data} idx={0} width={20} height={20} /> </Link>
       </WeatherBoxContainer>
 
       <TabContainer>

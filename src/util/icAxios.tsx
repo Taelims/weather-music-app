@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Swal from "sweetalert2";
+
 
 const icAxios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -22,16 +24,27 @@ icAxios.interceptors.response.use(
   error => {
 
     const statusCode = error.response ? error.response.status : null;
-
     switch (statusCode) {
       case 401:
-        console.log('Unauthorized error');
+        Swal.fire({
+          icon: 'error',
+          title: '인증 오류',
+          text: error.response.data.error,
+        })
         break;
       case 404:
-        console.log('Not Found error');
+        Swal.fire({
+          icon: 'error',
+          title: '리소스가 없습니다',
+          text: error.response.data.error,
+        })
         break;
       default:
-        console.error('An error occurred:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.error,
+        })
         break;
     }
     return Promise.reject(error);

@@ -1,7 +1,7 @@
 export interface playListComProps {
   width: number;
   height: number;
-  key: number
+  key?: number
   idx : number
   data : {
     item: {
