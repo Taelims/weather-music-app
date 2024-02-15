@@ -28,7 +28,7 @@ function UserMain() {
   const weatherVideoData: weatherVideoQuery = useGetWeatherVideo()
 
   return (
-    <>
+    weatherData && <>
       <div style = {{ color: 'white' }}> </div>
       <WeatherBoxContainer>
         <WeatherCom data = {weatherData.data}/>

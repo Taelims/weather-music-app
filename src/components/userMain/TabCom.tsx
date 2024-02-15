@@ -4,7 +4,7 @@ import PlayListCom from '../common/PlayListCom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useGetCategoryVideo } from '../../hooks/useGetCategoryVideo'
-import { categoryVideoQuery } from '../../types/components/playListComType'
+import { categoryVideoQuery, videoItem } from '../../types/components/playListComType'
 
 
 const TabContainer = styled.div`
@@ -29,12 +29,12 @@ const PlayListContainer = styled.div`
 
 function TabCom() {
   let [tab, setTab] = useState<string>('exercise')
-  const {isLoading, isError, data }: categoryVideoQuery = useGetCategoryVideo(tab)
+  const categoryVideoData: categoryVideoQuery = useGetCategoryVideo(tab)
 
-  if (isLoading) return <div>Loading...</div>;
+  if (categoryVideoData.isLoading) return <div>Loading...</div>;
 
   return (
-    <>
+    categoryVideoData && <>
       <TabContainer>
           <h3>
             <Badge bg="dark" onClick={()=>{setTab('exercise')}}>운동</Badge>
@@ -58,8 +58,9 @@ function TabCom() {
       <Link to={`/playlist/${tab}`} >
       <PlayListContainer>
         {
-          data.item.map((item : categoryVideoQuery['data']['item'][number], index: number)=>(
-             <PlayListCom data = {data} key = {index} idx={index} width={15} height={15}/>
+          categoryVideoData.data &&
+          categoryVideoData.data.map((item : videoItem, index: number)=>(
+             <PlayListCom data = {categoryVideoData.data} key = {index} idx={index} width={15} height={15}/>
             )
           )
         }

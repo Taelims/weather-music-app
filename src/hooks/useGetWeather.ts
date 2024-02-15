@@ -1,19 +1,21 @@
 import { useQuery } from 'react-query'
 import { useGeoLocation } from './useGeoLocation'
 import icAxios from '../util/icAxios'
-import { locationInfo } from '../types/page/userMainType'
+import { locationInfo, weatherItem, weatherQuery } from '../types/page/userMainType'
 import Swal from 'sweetalert2'
 
 
-const fetchWeather = async (location : locationInfo | undefined) => {
+const fetchWeather = async (location : locationInfo) => {
   if(location){
-    const weatherRes = await icAxios.get("api/v1/user/media/weather", {
-      params: {
-        latitude: location.latitude,
-        longitude: location.longitude
-      }
-    })
-    return weatherRes.data.result
+    let apiKey = process.env.REACT_APP_WEATHER_KEY
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
+
+    const weatherRes = await icAxios.get(url)
+    let data: weatherItem = {
+      weather: weatherRes.data.weather[0].main,
+      temp: Math.floor(weatherRes.data.main.temp - 273.15)
+    };
+    return data
   }
 }
 
@@ -35,9 +37,9 @@ export const useGetWeather = () => {
   }
 
   const { isLoading, isError, data } = useQuery(
-    "weather", ()=>fetchWeather(location), {
+    "weather", ()=>fetchWeather(location!), {
       enabled: !!location
     }
-  )
+  ) as weatherQuery
   return { isLoading, isError, data }
 }

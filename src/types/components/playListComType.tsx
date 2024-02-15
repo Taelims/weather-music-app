@@ -9,15 +9,11 @@ export interface playListComProps {
   height: number;
   key?: number
   idx : number
-  data : {
-    item: videoItem[]
-  }
+  data?: videoItem[]
 }
 
 export interface categoryVideoQuery {
   isLoading : boolean,
   isError : boolean,
-  data : {
-    item: videoItem[]
-  }
+  data?: videoItem[]
 }

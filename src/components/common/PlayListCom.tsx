@@ -9,12 +9,12 @@ function PlayListCom({data, idx, width, height} : playListComProps) {
       <Card.Body style={{ padding: 0 }}>
         <Card.Img
           variant="top"
-          src={ data?.item[idx].url }
+          src={ data?.[idx].url }
           style={{ width: `${width}rem`, height: `${height}rem`}}
         />
         <Card.Footer>
           <div style={{ color: 'white', textAlign: 'center' }}><strong>
-            { data?.item[idx].title }  </strong></div>
+            { data?.[idx].title }  </strong></div>
         </Card.Footer>
       </Card.Body>
     </Card>

@@ -4,7 +4,3 @@ export type playListItem= {
   url: string
 }
 
-export interface playList {
-  playListName: string,
-  item: playListItem[]
-}

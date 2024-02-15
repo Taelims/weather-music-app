@@ -1,22 +1,20 @@
+import { videoItem } from '../components/playListComType'
+
+export interface weatherItem{
+  weather: string
+  temp: number
+}
+
 export interface weatherQuery {
   isLoading: boolean,
   isError: boolean,
-  data: {
-    temp: number
-    weather: string
-  }
+  data: weatherItem
 }
 
 export interface weatherVideoQuery {
   isLoading: boolean,
   isError: boolean,
-  data: {
-    item: {
-      videoId: string
-      title: string
-      url: string
-    }[]
-  }
+  data?: videoItem[]
 }
 
 export interface locationInfo {
