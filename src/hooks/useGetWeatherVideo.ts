@@ -5,10 +5,10 @@ import { videoItem } from '../types/components/playListComType'
 
 
 const fetchVideo = async (weatherData : weatherInfo)=> {
-  let keyword: string = weatherData?.weather
+  let keyword = weatherData?.weather
   keyword = keyword === 'Clear' ? '맑은 날씨 음악' : '흐린 날씨 음악';
-  let apiKey: string = process.env.REACT_APP_YOUTUBE_KEY!
-  let url: string = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${keyword}%20music&videoDuration=medium&type=video&part=snippet`
+  let apiKey = process.env.REACT_APP_YOUTUBE_KEY
+  let url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${keyword}%20music&videoDuration=medium&type=video&part=snippet`
   const playListRes: any = await icAxios.get(url)
 
 

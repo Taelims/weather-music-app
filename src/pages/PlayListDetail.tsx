@@ -8,6 +8,7 @@ function PlayListDetail() {
   const [videoId, setVideoId] = useState<string>('');
   const params = useParams<string>();
   const queryClient: QueryClient = useQueryClient();
+  console.log(queryClient.getQueryData('weatherVideo'))
   const playList : playListItem[] = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
 
   const handleSongClick = (songVideoId : string) => {
@@ -21,7 +22,7 @@ function PlayListDetail() {
   },[])
 
   return (
-    playList && <div className="playlist-detail-container">
+    <div className="playlist-detail-container">
       <div className="video-area">
         <div className="video-frame">
           {videoId && (
