@@ -18,7 +18,7 @@ icAxios.interceptors.request.use(
 
 icAxios.interceptors.response.use(
   response => {
-    console.log('Response Interceptor:', response);
+    // console.log('Response Interceptor:', response);
     return response;
   },
   error => {

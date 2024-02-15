@@ -7,8 +7,8 @@ import Swal from 'sweetalert2'
 
 const fetchWeather = async (location : locationInfo) => {
   if(location){
-    let apiKey = process.env.REACT_APP_WEATHER_KEY
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
+    let apiKey: string = process.env.REACT_APP_WEATHER_KEY!
+    let url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
 
     const weatherRes = await icAxios.get(url)
     let data: weatherItem = {
