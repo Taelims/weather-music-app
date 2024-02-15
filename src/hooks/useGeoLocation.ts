@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react'
-
-interface LocationInfo {
-  latitude: number
-  longitude: number
-}
+import { locationInfo } from '../types/page/userMainType'
 
 export const useGeoLocation = (options = {}) => {
-  const [location, setLocation] = useState<LocationInfo>()
+  const [location, setLocation] = useState<locationInfo>()
   const [error, setError] = useState('')
 
   const handleSuccess = (pos: GeolocationPosition) => {
-    const { latitude, longitude } = pos.coords
+    const { latitude, longitude }: locationInfo = pos.coords
 
     setLocation({
       latitude,

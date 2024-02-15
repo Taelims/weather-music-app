@@ -4,9 +4,9 @@ import { videoItem } from '../types/components/playListComType'
 
 
 const fetchVideo = async (tab : string)=> {
-  let keyword = tab + "때 듣기 좋은노래모음"
-  let apiKey = process.env.REACT_APP_YOUTUBE_KEY
-  let url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${keyword}%20music&videoDuration=medium&type=video&part=snippet`
+  let keyword: string = tab + "때 듣기 좋은노래모음"
+  let apiKey: string = process.env.REACT_APP_YOUTUBE_KEY!
+  let url:string = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${keyword}%20music&videoDuration=medium&type=video&part=snippet`
   const playListRes: any = await icAxios.get(url)
 
 
