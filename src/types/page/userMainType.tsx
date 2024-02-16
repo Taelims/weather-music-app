@@ -1,6 +1,6 @@
 import { videoItem } from '../components/playListComType'
 
-export interface weatherItem{
+export type weatherItem = {
   weather: string
   temp: number
 }
@@ -17,7 +17,7 @@ export interface weatherVideoQuery {
   data?: videoItem[]
 }
 
-export interface locationInfo {
+export type locationInfo =  {
   latitude : number,
   longitude : number
 }

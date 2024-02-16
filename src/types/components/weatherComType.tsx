@@ -1,4 +1,4 @@
-export interface weatherInfo {
+export type weatherInfo = {
   temp : number
   weather : string
 }

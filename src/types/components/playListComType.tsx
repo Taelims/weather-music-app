@@ -1,4 +1,4 @@
-export interface videoItem {
+export type videoItem = {
   videoId: string
   title: string
   url: string
