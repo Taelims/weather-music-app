@@ -48,12 +48,10 @@ function CardCom(props : CardProps) {
           <Button variant="secondary" onClick={(e)=>handleDelete(props.item.id)}>삭제</Button>
         </Card.Body>
       </Card>
-      <ModalCom
-        isUpdate = {true}
-        item = {props.item}
-        show={show}
-        onHide={()=>{setShow(false)}}
-      />
+      {/*<ModalCom*/}
+      {/*  show={show}*/}
+      {/*  onHide={()=>{setShow(false)}}*/}
+      {/*/>*/}
     </Container>
   );
 }

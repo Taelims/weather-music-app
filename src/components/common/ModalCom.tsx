@@ -1,132 +1,85 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import uuid from 'react-uuid'
-import { useMutation, useQueryClient } from 'react-query'
+import React, { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 
 interface ModalProps {
-  isUpdate? : boolean
-  item?: {
-    id: string;
-    title: string;
-    subTitle: string;
-    text: string;
-  }
+  formType : string
   onHide: () => void;
   show: boolean;
 }
 
 interface formInfo {
   id: string;
-  title: string;
-  subTitle: string;
-  text: string;
+  password: string;
 }
 
-function ModalCom(props : ModalProps) {
-  useEffect(() => {
-    if(props.isUpdate && props.item){
-      setFormData(props.item)
-    }
-  },[props.isUpdate, props.item])
-
-  const queryClient = useQueryClient();
-
+function ModalCom({ formType, onHide, show } : ModalProps) {
   const [formData, setFormData] = useState<formInfo>({
     id : '',
-    title: '',
-    subTitle: '',
-    text: '',
+    password: '',
   });
 
   const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if(!props.isUpdate){
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-        id : uuid()
-      }));
-    }else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
-
-  const createItemMutation = useMutation((newItem:formInfo) =>
-    axios.post(`/api/create` , newItem)
-  )
-
-  const updateItemMutation = useMutation((updateItem:formInfo) =>
-    axios.post(`/api/update` , updateItem)
-  )
 
 
   const submitHandler = async () => {
-    if(!props.isUpdate)
-      try {
-        await createItemMutation.mutateAsync(formData);
-        await queryClient.invalidateQueries('item');
-      } catch (error) {
-        console.error(error);
-    }else {
-      try {
-        await updateItemMutation.mutateAsync(formData);
-        await queryClient.invalidateQueries('item');
-      } catch (error) {
-        console.error(error);
+    try {
+      if(formType === 'login'){
+        const response = await axios.post('/api/login', { id: formData.id , password: formData.password });
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+      }else {
+        await axios.post('/api/create/account', { id: formData.id , password: formData.password });
       }
+    } catch (error) {
+      console.error('create account fail:', error);
     }
-
-    setFormData(
-      {
+    setFormData({
         id: '',
-        title: '',
-        subTitle: '',
-        text: ''
+        password: '',
       })
-    props.onHide()
+    onHide()
   };
 
   return (
     <Modal
-      show={props.show}
-      onHide={props.onHide}
+      show={show}
+      onHide={onHide}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          New Article
+          {
+            formType === 'login' ? 'Login' : 'New Account'
+          }
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Label>Title</Form.Label>
+        <Form.Label>ID</Form.Label>
         <Form.Control
-          value={formData.title}
+          value={formData.id}
           onChange={handleChange}
-          name='title'
+          name='id'
         />
-        <Form.Label>Sub title</Form.Label>
+        <Form.Label>PassWord</Form.Label>
         <Form.Control
-          value={formData.subTitle}
+          value={formData.password}
           onChange={handleChange}
-          name='subTitle'
-        />
-        <Form.Label>Text</Form.Label>
-        <Form.Control
-          value={formData.text}
-          onChange={handleChange}
-          name='text'
+          name='password'
         />
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={submitHandler}>Submit</Button>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
