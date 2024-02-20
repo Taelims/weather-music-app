@@ -4,16 +4,20 @@ import Navbar from 'react-bootstrap/Navbar';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import ModalCom from './ModalCom'
-import { useAuth } from '../../hooks/useAuth'
+import { useRecoilState } from 'recoil'
+import { userState } from '../../store/atom/userState'
+import { UserState } from '../../types/state/stateType'
 
 
 function NavBarCom() {
   const [show, setShow] = useState<boolean>(false);
   const [formType, setFormType] = useState<string>('');
-  const { data, isLoading, isError } = useAuth();
+  const [user, setUser] = useRecoilState<UserState>(userState);
 
-  console.log(data)
-
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser({ id : '' , password: ''})
+  };
 
   return (
     <Navbar collapseOnSelect expand="lg">
@@ -27,13 +31,13 @@ function NavBarCom() {
           </Nav>
           <Nav>
             {
-              data?.message === undefined
+              !user?.id
                 ?
                 <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('login') }}>
                   Login
                 </Nav.Link>
                 :
-                <Nav.Link className="text-white" onClick={()=>{ localStorage.removeItem('token')  }}>
+                <Nav.Link className="text-white" onClick={handleLogout}>
                   Logout
                 </Nav.Link>
             }

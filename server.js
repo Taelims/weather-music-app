@@ -12,7 +12,7 @@ app.use(express.json());
 let userData = [
   {
     id: 'qwe',
-    pw: '2541'
+    password: '123'
   }
 ]
 
@@ -41,21 +41,28 @@ app.post('/api/create/account', (req, res) => {
 app.post('/api/login', (req, res) => {
   if (req.body) {
     const { username, password } = req.body;
+    console.log(userData)
     const user = userData.find(u => u.username === username && u.password === password);
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
     res.json({ token });
 
-    res.status(200).json({ success: true, message: 'Item deleted successfully' });
+    res.status(200).json({ success: true, message: 'login Success' });
   } else {
-    res.status(404).json({ success: false, message: 'Item not found' });
+    res.status(404).json({ success: false, message: 'ot found' });
   }
 });
 
 
-app.get('/api/auth', verifyToken, (req, res) => {
-  res.json({ message: '인증 성공' });
+app.get('/api/user', verifyToken, (req, res) => {
+  const { userId } = req.user;
+  const user = userData.find(u => u.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  res.json(user);
 });
 
 
@@ -64,10 +71,11 @@ function verifyToken(req, res, next) {
   if (typeof bearerHeader !== 'undefined') {
     const bearerToken = bearerHeader.split(' ')[1];
     req.token = bearerToken;
-    jwt.verify(req.token, 'secret-key', (err, authData) => {
+    jwt.verify(req.token, 'secret-key', (err, user) => {
       if (err) {
         res.sendStatus(403);
       } else {
+        req.user = user;
         next();
       }
     });
