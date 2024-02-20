@@ -18,14 +18,15 @@ export const useAuthQuery = () => {
       return response.data;
     } catch (error) {
       console.error(error);
-
+      localStorage.removeItem('token');
+      setUser({ id : '' , password: ''})
     }
   };
 
   const fetchUserData = async () => {
     try {
       const token: string | null = localStorage.getItem('token');
-      const userData = await getUserData(token);
+      const userData: {token:string} | undefined = await getUserData(token);
       setUser(userData);
     } catch (error) {
       console.error(error);
