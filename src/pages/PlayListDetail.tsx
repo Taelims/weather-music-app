@@ -3,16 +3,38 @@ import { ListGroup } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { QueryClient, useQueryClient } from 'react-query'
 import { playListItem } from '../types/page/playListDetailType'
+import Button from 'react-bootstrap/Button';
+import { useRecoilState } from 'recoil'
+import { UserState } from '../types/state/stateType'
+import { userState } from '../store/atom/userState'
+
 
 function PlayListDetail() {
   const [videoId, setVideoId] = useState<string>('');
   const params = useParams<string>();
   const queryClient: QueryClient = useQueryClient();
   const playList : playListItem[] = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
+  const [user, setUser] = useRecoilState<UserState>(userState);
 
   const handleSongClick = (songVideoId : string) => {
     setVideoId(songVideoId);
   };
+
+  const addPli = (index : number) =>{
+    setUser((prevData) => ({
+      ...prevData,
+    }));
+
+    setUser({
+      ...user,
+      playList : [
+        {
+          videoId: playList[index].videoId,
+          title: playList[index].title,
+          url: playList[index].url,
+        }]
+      })
+  }
 
   useEffect(()=>{
     if(playList){
@@ -49,6 +71,13 @@ function PlayListDetail() {
                   style={{ width: "50px", height: "50px" }}
                 />
                 {" " + item.title }
+                <Button
+                  key={index}
+                  className='list-btn'
+                  variant="info"
+                  style={{ fontSize: '12px', fontWeight: 'bold' }}
+                  onClick={()=>addPli(index)}
+                >add My Pli</Button>
               </ListGroup.Item>
             ))
           }

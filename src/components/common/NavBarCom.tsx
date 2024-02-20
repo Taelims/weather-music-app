@@ -16,7 +16,10 @@ function NavBarCom() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setUser({ id : '' , password: ''})
+    setUser({
+      id : '' ,
+      playList: []
+    })
   };
 
   return (

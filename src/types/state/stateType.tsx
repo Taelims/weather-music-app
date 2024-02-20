@@ -1,9 +1,11 @@
+import { playListItem } from '../page/playListDetailType'
+
 export interface WeatherState {
   temp : number
   weather : string
 }
 
 export interface UserState {
-  id : string
-  password : string
+  id?: string
+  playList?: playListItem[]
 }

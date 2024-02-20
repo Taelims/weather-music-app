@@ -40,3 +40,7 @@
   color: white !important;
   border-color: black !important;
 }
+
+.list-btn{
+  float: right;
+}

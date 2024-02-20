@@ -1,41 +1,42 @@
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import axios from 'axios';
+import { useQuery } from 'react-query';
+import { useRecoilState } from 'recoil'
 import { userState } from '../store/atom/userState'
+import { UserState } from '../types/state/stateType'
 
-const useFetchUserData = () => {
-  const [user, setUser] = useRecoilState(userState);
 
-  useEffect(() => {
-    const getUserData = async (token: any) => {
-      try {
-        const response = await axios.get('/api/user', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        return response.data;
-      } catch (error: any) {
-        throw error.response.data;
+export const useAuth = () => {
+  const [user, setUser] = useRecoilState<UserState>(userState);
+  const token: string = localStorage.getItem('token')!;
+
+  const getUserData = async (token: string) => {
+    try {
+      await axios.get('/api/user', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem('token');
+      setUser({
+        id : '' ,
+        playList: []
+      })
+    }
+  };
+
+  const fetchUserData = async () => {
+    try {
+      if (token) {
+        await getUserData(token);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (token) {
-          const userData = await getUserData(token);
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [setUser]);
-
-  return user;
+  return useQuery('userInfo', fetchUserData, {
+    enabled: !!token,
+  });
 };
-
-export default useFetchUserData;
