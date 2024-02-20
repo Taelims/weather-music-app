@@ -11,7 +11,7 @@ export const useSignInUp = () => {
     const response: loginRes = await axios.post('/api/login', { id, password });
     const token = response.data.token;
     localStorage.setItem('token', token);
-    setUser({ id: id })
+    setUser({ id: id , playList: []})
   };
 
   const createAccount = async (id: string, password: string) => {

@@ -25,15 +25,17 @@ function PlayListDetail() {
       ...prevData,
     }));
 
-    setUser({
-      ...user,
-      playList : [
+    setUser((prevData) => ({
+      ...prevData,
+      playList: [
+        ...prevData.playList!,
         {
           videoId: playList[index].videoId,
           title: playList[index].title,
           url: playList[index].url,
-        }]
-      })
+        }
+      ]
+    }));
   }
 
   useEffect(()=>{
