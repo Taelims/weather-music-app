@@ -21,11 +21,7 @@ function PlayListDetail() {
   };
 
   const addPli = (index : number) =>{
-    setUser((prevData) => ({
-      ...prevData,
-    }));
-
-    setUser((prevData) => ({
+    setUser((prevData : UserState): UserState => ({
       ...prevData,
       playList: [
         ...prevData.playList!,
@@ -73,13 +69,17 @@ function PlayListDetail() {
                   style={{ width: "50px", height: "50px" }}
                 />
                 {" " + item.title }
-                <Button
-                  key={index}
-                  className='list-btn'
-                  variant="info"
-                  style={{ fontSize: '12px', fontWeight: 'bold' }}
-                  onClick={()=>addPli(index)}
-                >add My Pli</Button>
+                {
+                  user.id &&
+                  <Button
+                    key={index}
+                    className='list-btn'
+                    variant="info"
+                    style={{ fontSize: '12px', fontWeight: 'bold' }}
+                    onClick={()=>addPli(index)}>
+                    add My Pli
+                  </Button>
+                }
               </ListGroup.Item>
             ))
           }

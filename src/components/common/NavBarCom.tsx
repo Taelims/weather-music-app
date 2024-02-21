@@ -7,6 +7,7 @@ import ModalCom from './ModalCom'
 import { useRecoilState } from 'recoil'
 import { userState } from '../../store/atom/userState'
 import { UserState } from '../../types/state/stateType'
+import { Badge } from 'react-bootstrap'
 
 
 function NavBarCom() {
@@ -40,9 +41,12 @@ function NavBarCom() {
                   Login
                 </Nav.Link>
                 :
-                <Nav.Link className="text-white" onClick={handleLogout}>
-                  Logout
-                </Nav.Link>
+                <>
+                  <h4> <Badge style={{margin: '5px'}} bg="light" text="dark">{user.id}</Badge> </h4>
+                  <Nav.Link className="text-white" onClick={handleLogout}>
+                    Logout
+                  </Nav.Link>
+                </>
             }
             <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('create') }}>
               Create Account

@@ -8,6 +8,10 @@ import { useGetWeatherVideo } from '../hooks/useGetWeatherVideo'
 import { useGetWeather } from '../hooks/useGetWeather'
 import { weatherQuery, weatherVideoQuery } from '../types/page/userMainType'
 import { useAuth } from '../hooks/useAuth'
+import MyPliCom from '../components/userMain/MyPliCom'
+import { useRecoilValue } from 'recoil'
+import { UserState } from '../types/state/stateType'
+import { userState } from '../store/atom/userState'
 
 
 const WeatherBoxContainer = styled.div`
@@ -28,10 +32,17 @@ function UserMain() {
   useAuth()
   const weatherData: weatherQuery = useGetWeather()
   const weatherVideoData: weatherVideoQuery = useGetWeatherVideo()
+  const user: UserState = useRecoilValue(userState);
 
   return (
-    weatherData && <>
-      <div style = {{ color: 'white' }}> </div>
+    weatherData.data &&
+    <>
+      {
+        user?.playList && user?.playList?.length > 0 &&
+        <WeatherBoxContainer>
+          <MyPliCom/>
+        </WeatherBoxContainer>
+      }
       <WeatherBoxContainer>
         <WeatherCom data = {weatherData.data}/>
         <Link to="/playlist/weather"> <PlayListCom data ={weatherVideoData.data} idx={0} width={20} height={20} /> </Link>
