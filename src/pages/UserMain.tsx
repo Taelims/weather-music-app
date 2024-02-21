@@ -32,7 +32,7 @@ function UserMain() {
   useAuth()
   const weatherData: weatherQuery = useGetWeather()
   const weatherVideoData: weatherVideoQuery = useGetWeatherVideo()
-  const user: UserState = useRecoilValue(userState);
+  const user = useRecoilValue<UserState>(userState);
 
   return (
     weatherData.data &&

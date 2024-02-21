@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { useGeoLocation } from './useGeoLocation'
 import icAxios from '../util/icAxios'
-import { locationInfo, weatherItem, weatherQuery } from '../types/page/userMainType'
+import { GeoLocation, locationInfo, weatherItem, weatherQuery } from '../types/page/userMainType'
 import Swal from 'sweetalert2'
 
 
@@ -23,7 +23,7 @@ export const useGetWeather = () => {
     timeout: 180000,
     maximumAge: 7000,
   }
-  const { location, error } = useGeoLocation(geolocationOptions);
+  const { location, error }: GeoLocation = useGeoLocation(geolocationOptions);
 
   if(error){
     console.log(error)

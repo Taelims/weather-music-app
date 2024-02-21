@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { userState } from '../store/atom/userState'
 import { UserState } from '../types/state/stateType'
 
 
 export const useAuth = () => {
-  const [user, setUser] = useRecoilState<UserState>(userState);
+  const setUser = useSetRecoilState<UserState>(userState);
   const token: string = localStorage.getItem('token')!;
 
   const getUserData = async (token: string) => {

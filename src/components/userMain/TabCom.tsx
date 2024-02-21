@@ -4,7 +4,7 @@ import PlayListCom from '../common/PlayListCom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useGetCategoryVideo } from '../../hooks/useGetCategoryVideo'
-import { categoryVideoQuery, videoItem } from '../../types/components/playListComType'
+import { videoItem, VideoQuery } from '../../types/components/playListComType'
 
 
 const TabContainer = styled.div`
@@ -29,7 +29,7 @@ const PlayListContainer = styled.div`
 
 function TabCom() {
   let [tab, setTab] = useState<string>('exercise')
-  const categoryVideoData: categoryVideoQuery = useGetCategoryVideo(tab)
+  const categoryVideoData: VideoQuery = useGetCategoryVideo(tab)
 
   if (categoryVideoData.isLoading) return <div>Loading...</div>;
 

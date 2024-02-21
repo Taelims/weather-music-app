@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { locationInfo } from '../types/page/userMainType'
+import { GeoLocation, locationInfo } from '../types/page/userMainType'
 
-export const useGeoLocation = (options = {}) => {
+export const useGeoLocation = (options = {}): GeoLocation => {
   const [location, setLocation] = useState<locationInfo>()
   const [error, setError] = useState('')
 

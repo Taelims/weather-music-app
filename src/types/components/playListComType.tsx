@@ -12,7 +12,7 @@ export interface playListComProps {
   data?: videoItem[]
 }
 
-export interface categoryVideoQuery {
+export interface VideoQuery {
   isLoading : boolean,
   isError : boolean,
   data?: videoItem[]

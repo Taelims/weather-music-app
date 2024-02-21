@@ -22,3 +22,19 @@ export type locationInfo =  {
   longitude : number
 }
 
+export interface GeoLocation {
+  error : string,
+  location? : locationInfo
+}
+
+export interface SignInUp{
+  createAccout : {
+    id: string
+    password: string
+  }
+  login : {
+    id: string
+    password: string
+  }
+}
+
