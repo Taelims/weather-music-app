@@ -108,7 +108,7 @@ function PlayListDetail() {
       {
         user?.playList && user?.playList?.length > 0 &&
         <BoxContainer>
-          <MyPliCom/>
+          <MyPliCom setVideoId = {setVideoId}/>
         </BoxContainer>
       }
       </div>
