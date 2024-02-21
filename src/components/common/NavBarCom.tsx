@@ -37,9 +37,14 @@ function NavBarCom() {
             {
               !user?.id
                 ?
-                <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('login') }}>
-                  Login
-                </Nav.Link>
+                <>
+                  <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('login') }}>
+                    Login
+                  </Nav.Link>
+                  <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('create') }}>
+                    Create Account
+                  </Nav.Link>
+                </>
                 :
                 <>
                   <h4> <Badge style={{margin: '5px'}} bg="light" text="dark">{user.id}</Badge> </h4>
@@ -48,9 +53,6 @@ function NavBarCom() {
                   </Nav.Link>
                 </>
             }
-            <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('create') }}>
-              Create Account
-            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
