@@ -41,7 +41,6 @@ function MyPliCom() {
                 delete Pli
               </Button>
             </ListGroup.Item>
-
           ))
         }
       </ListGroup>
