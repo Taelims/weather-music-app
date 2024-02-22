@@ -45,25 +45,23 @@ app.post('/api/login', (req, res) => {
     const user = userData.find(u => u.username === username && u.password === password);
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1H' });
     res.json({ token });
 
     res.status(200).json({ success: true, message: 'login Success' });
   } else {
-    res.status(404).json({ success: false, message: 'ot found' });
+    res.status(404).json({ success: false, message: 'not found' });
   }
 });
 
 
 app.get('/api/user', verifyToken, (req, res) => {
   const { userId } = req.user;
-  const user = userData.find(u => u.id === userId);
-
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
-  }
-  res.json(user);
+  const auth = userData.find(u => u.id === userId);
+  // res.json(auth);
+  res.send(true);
 });
+
 
 
 function verifyToken(req, res, next) {
@@ -73,14 +71,16 @@ function verifyToken(req, res, next) {
     req.token = bearerToken;
     jwt.verify(req.token, 'secret-key', (err, user) => {
       if (err) {
-        res.sendStatus(403);
+        // res.sendStatus(403);
+        res.send(false);
       } else {
         req.user = user;
         next();
       }
     });
   } else {
-    res.sendStatus(403);
+    // res.sendStatus(403);
+    res.send(false);
   }
 }
 

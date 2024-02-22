@@ -8,10 +8,11 @@ import { useRecoilState } from 'recoil'
 import { userState } from '../../store/atom/userState'
 import { UserState } from '../../types/state/stateType'
 import { Badge } from 'react-bootstrap'
+import { modalState } from '../../store/atom/modalState'
 
 
 function NavBarCom() {
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useRecoilState<boolean>(modalState)
   const [formType, setFormType] = useState<string>('');
   const [user, setUser] = useRecoilState<UserState>(userState);
 
