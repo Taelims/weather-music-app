@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import icAxios from '../util/icAxios'
-import { videoItem, VideoQuery } from '../types/components/playListComType'
+import { videoItem } from '../types/components/playListComType'
+import { VideoQuery } from '../types/hook/hookType'
 
 
 const fetchVideo = async (tab : string)=> {

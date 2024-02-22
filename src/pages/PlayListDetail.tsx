@@ -23,6 +23,12 @@ function PlayListDetail() {
   const playList : playListItem[] = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
   const [user, setUser] = useRecoilState<UserState>(userState);
 
+
+
+
+
+
+
   const handleSongClick = (songVideoId : string) => {
     setVideoId(songVideoId);
   };

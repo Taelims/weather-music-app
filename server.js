@@ -16,6 +16,35 @@ let userData = [
   }
 ]
 
+let boardData = [
+  {
+    id : '1',
+    title: 'title',
+    text: 'textextext'
+  },
+  {
+    id : '2',
+    title: 'title2',
+    text: 'textextext'
+  },
+  {
+    id : '3',
+    title: 'title3',
+    text: 'textextext'
+  },
+  {
+    id : '4',
+    title: 'title4',
+    text: 'textextext'
+  },
+  {
+    id : '5',
+    title: 'title5',
+    text: 'textextext'
+  }
+]
+
+
 
 app.listen(port, function () {
   console.log(`listening on ${port}`)
@@ -54,15 +83,12 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-
 app.get('/api/user', verifyToken, (req, res) => {
   const { userId } = req.user;
   const auth = userData.find(u => u.id === userId);
   // res.json(auth);
   res.send(true);
 });
-
-
 
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers['authorization'];
@@ -83,6 +109,45 @@ function verifyToken(req, res, next) {
     res.send(false);
   }
 }
+
+app.get('/api/board', (req, res) => {
+  res.json(boardData);
+});
+
+//Create
+app.post('/api/board/create', (req, res) => {
+  if (req.body) {
+    boardData.push(req.body)
+    res.status(200).json({ success: true, message: 'Item created successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+});
+
+//Update
+app.post('/api/board/update', (req, res) => {
+  if (req.body) {
+    boardData = boardData.map((item)=>
+      item.id === req.body.id ? {...req.body} : item
+    )
+    res.status(200).json({ success: true, message: 'Item updated successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+});
+
+//Delete
+app.delete('/api/board/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const index = boardData.findIndex(item => item.id === id);
+  if (index !== -1) {
+    boardData.splice(index, 1);
+    res.status(200).json({ success: true, message: 'Item deleted successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+});
+
 
 
 app.get('*', function (req, res) {

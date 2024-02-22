@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from 'react-query'
 import icAxios from '../util/icAxios'
 import { weatherInfo } from '../types/components/weatherComType'
-import { videoItem, VideoQuery } from '../types/components/playListComType'
+import { videoItem } from '../types/components/playListComType'
+import { VideoQuery } from '../types/hook/hookType'
 
 
 const fetchVideo = async (weatherData : weatherInfo)=> {

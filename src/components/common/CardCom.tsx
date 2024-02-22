@@ -2,34 +2,20 @@ import Card from 'react-bootstrap/Card';
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
-import ModalCom from './ModalCom'
-import { useMutation, useQueryClient } from 'react-query'
-import axios from 'axios'
+import { BoardInfo } from '../../types/hook/hookType'
+import { useBoardMutation } from '../../hooks/useBoardMutation'
 
 const Container = styled.div`
 `;
 
-type CardProps = {
-  item: {
-    id: string;
-    title: string;
-    subTitle: string;
-    text: string;
-  }
-}
 
-function CardCom(props : CardProps) {
+function CardCom({item} : {item :BoardInfo}) {
   const [show, setShow] = useState(false);
-  const queryClient = useQueryClient();
-
-  const deleteItemMutation = useMutation((id) =>
-    axios.delete(`/api/delete/${id}`)
-  )
+  const {addPost , updatePost, deletePost } = useBoardMutation()
 
   const handleDelete = async (id : any) => {
     try {
-      await deleteItemMutation.mutateAsync(id);
-      await queryClient.invalidateQueries('item');
+      await deletePost(id);
     } catch (error) {
       console.error(error);
     }
@@ -39,13 +25,13 @@ function CardCom(props : CardProps) {
     <Container>
       <Card style={{ width: '18rem' }}>
         <Card.Body>
-          <Card.Title>{props.item.title}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{props.item.subTitle}</Card.Subtitle>
+          <Card.Title>{item.title}</Card.Title>
+          {/*<Card.Subtitle className="mb-2 text-muted">{item.subTitle}</Card.Subtitle>*/}
           <Card.Text>
-            {props.item.text}
+            {item.text}
           </Card.Text>
           <Button variant="primary" onClick={()=>setShow(true)}>수정</Button>
-          <Button variant="secondary" onClick={(e)=>handleDelete(props.item.id)}>삭제</Button>
+          <Button variant="secondary" onClick={(e)=>handleDelete(item.id)}>삭제</Button>
         </Card.Body>
       </Card>
       {/*<ModalCom*/}

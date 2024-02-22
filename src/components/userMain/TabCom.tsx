@@ -4,7 +4,8 @@ import PlayListCom from '../common/PlayListCom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useGetCategoryVideo } from '../../hooks/useGetCategoryVideo'
-import { videoItem, VideoQuery } from '../../types/components/playListComType'
+import { videoItem } from '../../types/components/playListComType'
+import { VideoQuery } from '../../types/hook/hookType'
 
 
 const TabContainer = styled.div`

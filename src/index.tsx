@@ -13,7 +13,11 @@ const root = ReactDOM.createRoot(
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus : false, //default: true
+      refetchOnMount : true, //default: true
+      refetchOnReconnect : true, //default: true
+      staleTime : 0, //default: 0
+      cacheTime : 60 * 5 * 1000  //default: 5분 (60 * 5 * 1000)
     },
   },
 })

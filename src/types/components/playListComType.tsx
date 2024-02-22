@@ -11,9 +11,3 @@ export interface playListComProps {
   idx : number
   data?: videoItem[]
 }
-
-export interface VideoQuery {
-  isLoading : boolean,
-  isError : boolean,
-  data?: videoItem[]
-}
