@@ -6,7 +6,7 @@ import { useSignInUp } from '../../hooks/useSignInUp'
 import { formInfo, ModalProps } from '../../types/components/ModalComType'
 
 
-function ModalCom({ formType, onHide, show } : ModalProps) {
+function ModalCom({ formType, onHide, signModalShow } : ModalProps) {
   const { login, createAccount } = useSignInUp()
   const [formData, setFormData] = useState<formInfo>({
     id : '',
@@ -40,7 +40,7 @@ function ModalCom({ formType, onHide, show } : ModalProps) {
 
   return (
     <Modal
-      show={show}
+      show={signModalShow}
       onHide={onHide}
       aria-labelledby="contained-modal-title-vcenter"
       centered

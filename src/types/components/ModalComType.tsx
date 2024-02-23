@@ -1,7 +1,7 @@
 export interface ModalProps {
   formType : string
   onHide: () => void;
-  show: boolean;
+  signModalShow: boolean;
 }
 
 export interface formInfo {

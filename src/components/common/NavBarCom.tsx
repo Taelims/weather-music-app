@@ -2,19 +2,22 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'
 import ModalCom from './ModalCom'
 import { useRecoilState } from 'recoil'
 import { userState } from '../../store/atom/userState'
 import { UserState } from '../../types/state/stateType'
 import { Badge } from 'react-bootstrap'
 import { modalState } from '../../store/atom/modalState'
+import BoardDetailModal from '../board/BoardDetailModal'
 
 
 function NavBarCom() {
-  const [show, setShow] = useRecoilState<boolean>(modalState)
+  const [signModalShow, setSignModalShow] = useRecoilState<boolean>(modalState)
+  const [boardModalShow, setBoardModalShow] = useState<boolean>(false)
   const [formType, setFormType] = useState<string>('');
   const [user, setUser] = useRecoilState<UserState>(userState);
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -31,17 +34,24 @@ function NavBarCom() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link style={{color: 'white'}} to="/board">Pli Board</Link>
+            <Link to='/board' style={{color : 'white', margin: 'auto' }} >Pli Board</Link>
+            {
+              location.pathname === '/board' &&
+              <Nav.Link className="text-white" onClick={()=>{ return setBoardModalShow(true)}} >
+              새 글쓰기
+              </Nav.Link>
+            }
           </Nav>
+
           <Nav>
             {
               !user?.id
                 ?
                 <>
-                  <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('login') }}>
+                  <Nav.Link className="text-white" onClick={()=>{ return setSignModalShow(true), setFormType('login') }}>
                     Login
                   </Nav.Link>
-                  <Nav.Link className="text-white" onClick={()=>{ return setShow(true), setFormType('create') }}>
+                  <Nav.Link className="text-white" onClick={()=>{ return setSignModalShow(true), setFormType('create') }}>
                     Create Account
                   </Nav.Link>
                 </>
@@ -57,9 +67,13 @@ function NavBarCom() {
         </Navbar.Collapse>
       </Container>
       <ModalCom
-        show={show}
+        signModalShow={signModalShow}
         formType= {formType}
-        onHide={()=>{setShow(false)}}
+        onHide={()=>{setSignModalShow(false)}}
+      />
+      <BoardDetailModal
+        boardModalShow={boardModalShow}
+        onHide={()=>{setBoardModalShow(false)}}
       />
     </Navbar>
   );

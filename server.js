@@ -20,27 +20,46 @@ let boardData = [
   {
     id : '1',
     title: 'title',
-    text: 'textextext'
+    text: 'textextext',
+    comment: [
+      'comment1-1',
+      'comment1-2',
+      'comment1-3',
+    ],
+    views: 1,
+    addDate: '2024-02-23'
   },
   {
     id : '2',
     title: 'title2',
-    text: 'textextext'
+    text: 'textextext',
+    comment: ['comment2'],
+    views: 2,
+    addDate: '2024-02-21'
   },
   {
     id : '3',
     title: 'title3',
-    text: 'textextext'
+    text: 'textextext',
+    comment: ['comment3'],
+    views: 3,
+    addDate: '2024-02-15'
   },
   {
     id : '4',
     title: 'title4',
-    text: 'textextext'
+    text: 'textextext',
+    comment: ['comment4'],
+    views: 0,
+    addDate: '2024-02-27'
   },
   {
     id : '5',
     title: 'title5',
-    text: 'textextext'
+    text: 'textextext',
+    comment: ['comment5'],
+    views: 2,
+    addDate: '2024-02-23'
   }
 ]
 

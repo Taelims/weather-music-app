@@ -5,7 +5,6 @@ import { BoardInfo, BoardQuery } from '../types/hook/hookType'
 
 const fetchBoard = async ()=> {
   const res: {data : BoardInfo} = await icAxios.get('/api/board')
-  console.log(res)
   return res.data
 }
 

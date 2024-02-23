@@ -10,6 +10,9 @@ export type BoardInfo = {
   id: string,
   title : string,
   text : string
+  comment?: [],
+  views?: number,
+  addDate: string,
 }
 
 export interface BoardQuery {
