@@ -6,7 +6,7 @@ import { useSignInUp } from '../../hooks/useSignInUp'
 import { formInfo, ModalProps } from '../../types/components/ModalComType'
 
 
-function ModalCom({ formType, onHide, signModalShow } : ModalProps) {
+function ModalCom({ formName, onHide, signModalShow } : ModalProps) {
   const { login, createAccount } = useSignInUp()
   const [formData, setFormData] = useState<formInfo>({
     id : '',
@@ -23,7 +23,7 @@ function ModalCom({ formType, onHide, signModalShow } : ModalProps) {
 
   const submitHandler = async () => {
     try {
-      if(formType === 'login'){
+      if(formName === 'login'){
         await login( formData.id, formData.password );
       }else {
         await createAccount( formData.id, formData.password );
@@ -48,7 +48,7 @@ function ModalCom({ formType, onHide, signModalShow } : ModalProps) {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           {
-            formType === 'login' ? 'Login' : 'New Account'
+            formName === 'login' ? 'Login' : 'New Account'
           }
         </Modal.Title>
       </Modal.Header>

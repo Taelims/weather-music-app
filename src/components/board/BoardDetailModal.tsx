@@ -1,35 +1,54 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { BoardFormInfo, BoardPropsType } from '../../types/components/BoardDetailModalComType'
 import { useBoardMutation } from '../../hooks/useBoardMutation'
 import uuid from 'react-uuid'
 import moment from 'moment'
 
 
-function BoardDetailModal({ onHide, boardModalShow } : BoardPropsType) {
+function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : BoardPropsType) {
+  useEffect(()=>{
+    if(boardModalName !== 'create'){
+      setFormData(item!)
+    }
+  },[item, boardModalName])
+
   const [formData, setFormData] = useState<BoardFormInfo>({
     id : '',
     title : '',
     text: '',
     addDate: '',
+    comment: [],
+    newComment: '',
   });
-  const {addPost } = useBoardMutation()
+  const {addPost, updatePost } = useBoardMutation()
 
   const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
     const { name, value }:{ name: string; value: string; } = e.target;
     setFormData((prevData : BoardFormInfo) => ({
       ...prevData,
       [name]: value,
-      id : uuid(),
-      addDate : moment().format('YYYY-MM-DD')
+      id : boardModalName === 'create' ? uuid() : prevData.id,
+      addDate : boardModalName === 'create' ? moment().format('YYYY-MM-DD') : prevData.addDate
     }));
   };
 
   const submitHandler = async () => {
     try {
-      await addPost(formData)
+      if(boardModalName === 'create'){
+        await addPost(formData)
+      }else if(boardModalName === 'update'){
+        await updatePost(formData)
+      }else if(boardModalName === 'view'){
+        const updatedFormData : BoardFormInfo = {
+          ...formData,
+          comment: formData.comment ? [...formData.comment!, formData.newComment!] : [formData.newComment!],
+          newComment: ''
+        };
+        await updatePost(updatedFormData)
+      }
     } catch (error) {
       console.error(error);
     }
@@ -38,6 +57,7 @@ function BoardDetailModal({ onHide, boardModalShow } : BoardPropsType) {
       title : '',
       text: '',
       addDate: '',
+      newComment: '',
     })
     onHide()
   };
@@ -52,13 +72,14 @@ function BoardDetailModal({ onHide, boardModalShow } : BoardPropsType) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Board
+          Article
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Label>Title</Form.Label>
         <Form.Control
-          value={formData.title}
+          readOnly={boardModalName=== 'view'}
+          value={formData?.title || ''}
           onChange={handleChange}
           name='title'
         />
@@ -66,18 +87,29 @@ function BoardDetailModal({ onHide, boardModalShow } : BoardPropsType) {
         <Form.Control
           as="textarea"
           rows={3}
-          value={formData.text}
+          readOnly={boardModalName=== 'view'}
+          value={formData?.text}
           onChange={handleChange}
           name='text'
         />
-        <Form.Label>댓글</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={2}
-          value={formData.text}
-          onChange={handleChange}
-          name='text'
-        />
+        {
+        boardModalName === 'view' &&
+          <>
+          <Form.Label>댓글</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            value={formData?.newComment}
+            onChange={handleChange}
+            name='newComment'
+          />
+          {
+            formData?.comment?.map((comm: string, idx: number)=>{
+              return <div key={idx}>{comm}</div>
+            })
+          }
+        </>
+        }
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={submitHandler}>Submit</Button>

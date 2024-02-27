@@ -1,5 +1,5 @@
 export interface ModalProps {
-  formType : string
+  formName : string
   onHide: () => void;
   signModalShow: boolean;
 }

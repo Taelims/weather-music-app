@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query'
 import { BoardInfo } from '../types/hook/hookType'
 import icAxios from '../util/icAxios'
+import { BoardFormInfo } from '../types/components/BoardDetailModalComType'
 
 export const useBoardMutation = () => {
   const queryClient = useQueryClient();

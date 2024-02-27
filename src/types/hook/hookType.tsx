@@ -10,7 +10,7 @@ export type BoardInfo = {
   id: string,
   title : string,
   text : string
-  comment?: [],
+  comment?: string[]
   views?: number,
   addDate: string,
 }
