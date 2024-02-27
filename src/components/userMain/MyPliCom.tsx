@@ -3,13 +3,13 @@ import { ListGroup } from 'react-bootstrap'
 import { playListItem } from '../../types/page/playListDetailType'
 import { useRecoilState } from 'recoil'
 import { UserState } from '../../types/state/stateType'
-import { userState } from '../../store/atom/userState'
+import { userAtom } from '../../store/atom/userAtom'
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button'
 
 
 function MyPliCom({setVideoId} : { setVideoId: React.Dispatch<React.SetStateAction<string>> }) {
-  const [user ,setUser] = useRecoilState<UserState>(userState);
+  const [user ,setUser] = useRecoilState<UserState>(userAtom);
 
   const deletePli = (index : number) =>{
     setUser((prevData: UserState) : UserState =>({

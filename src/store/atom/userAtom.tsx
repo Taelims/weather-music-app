@@ -6,8 +6,8 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const userState = atom({
-  key: 'userState',
+export const userAtom = atom({
+  key: 'userAtom',
   default: {
     id: '' ,
     playList: []

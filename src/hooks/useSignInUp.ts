@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useRecoilState } from 'recoil'
-import { userState } from '../store/atom/userState'
+import { userAtom } from '../store/atom/userAtom'
 import { UserState } from '../types/state/stateType'
 import { loginRes } from '../types/components/ModalComType'
 
 
 export const useSignInUp = () => {
-  const [user, setUser] = useRecoilState<UserState>(userState);
+  const [user, setUser] = useRecoilState<UserState>(userAtom);
   const login = async (id: string, password: string) => {
     const response: loginRes = await axios.post('/api/login', { id, password });
     const token : string = response.data.token;

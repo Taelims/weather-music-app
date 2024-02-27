@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useSetRecoilState } from 'recoil'
-import { userState } from '../store/atom/userState'
+import { userAtom } from '../store/atom/userAtom'
 import { UserState } from '../types/state/stateType'
 import { modalShowAtom } from '../store/atom/modalShowAtom'
 
 
 export const useAuth = () => {
-  const setUser = useSetRecoilState<UserState>(userState);
+  const setUser = useSetRecoilState<UserState>(userAtom);
   const setShow = useSetRecoilState<boolean>(modalShowAtom)
   const token: string = localStorage.getItem('token')!;
 
