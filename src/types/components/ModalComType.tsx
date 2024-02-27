@@ -1,16 +1,10 @@
-export interface ModalProps {
+export interface LogInModalPropsType {
   formName : string
   onHide: () => void;
   signModalShow: boolean;
 }
 
-export interface formInfo {
+export interface LogInFormType {
   id: string;
   password: string;
-}
-
-export type loginRes = {
-  data : {
-    token : string
-  }
 }

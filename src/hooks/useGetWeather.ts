@@ -1,16 +1,17 @@
 import { useQuery } from 'react-query'
 import { useGeoLocation } from './useGeoLocation'
 import icAxios from '../util/icAxios'
-import { GeoLocation, locationInfo, weatherItem, weatherQuery } from '../types/page/userMainType'
+import { GeoLocationType, LocationType, WeatherQueryType } from '../types/page/UserMainType'
 import Swal from 'sweetalert2'
+import { WeatherType } from '../types/components/WeatherComType'
 
 
-const fetchWeather = async (location : locationInfo) => {
+const fetchWeather = async (location : LocationType) => {
   let apiKey: string = process.env.REACT_APP_WEATHER_KEY!
   let url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
 
   const weatherRes = await icAxios.get(url)
-  let data: weatherItem = {
+  let data: WeatherType = {
     weather: weatherRes.data.weather[0].main,
     temp: Math.floor(weatherRes.data.main.temp - 273.15)
   };
@@ -23,7 +24,7 @@ export const useGetWeather = () => {
     timeout: 180000,
     maximumAge: 7000,
   }
-  const { location, error }: GeoLocation = useGeoLocation(geolocationOptions);
+  const { location, error }: GeoLocationType = useGeoLocation(geolocationOptions);
 
   if(error){
     console.log(error)
@@ -38,6 +39,6 @@ export const useGetWeather = () => {
     "weather", ()=>fetchWeather(location!), {
       enabled: !!location
     }
-  ) as weatherQuery
+  ) as WeatherQueryType
   return { isLoading, isError, data }
 }

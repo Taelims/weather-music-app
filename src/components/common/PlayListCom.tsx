@@ -1,9 +1,9 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import { playListComProps } from '../../types/components/playListComType'
+import { PlayListComPropsType } from '../../types/components/PlayListComType'
 
 
-function PlayListCom({data, idx, width, height} : playListComProps) {
+function PlayListCom({data, idx, width, height} : PlayListComPropsType) {
   return (
     <Card style={{ width: `${width}rem`, height: `${height}rem`, padding: '0px', borderColor: 'rgb(54,53,53)' }}>
       <Card.Body style={{ padding: 0 }}>

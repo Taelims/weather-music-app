@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useGetBoardList } from '../hooks/useGetBoardList'
-import { BoardInfo, BoardQuery } from '../types/hook/hookType'
+import { BoardItemType, BoardQueryType } from '../types/hook/HookType'
 import CardCom from '../components/common/CardCom'
 
 const CardContainer = styled.div`
@@ -16,12 +16,12 @@ const CardContainer = styled.div`
 
 
 function Board() {
-  const BoardData: BoardQuery = useGetBoardList()
+  const BoardData: BoardQueryType = useGetBoardList()
   return (
     <>
       <CardContainer>
         {
-          BoardData?.data?.map((item: BoardInfo, index : number)=>(
+          BoardData?.data?.map((item: BoardItemType, index : number)=>(
             <CardCom item = {item}  key={index}/>
           ))
         }

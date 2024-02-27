@@ -1,16 +1,8 @@
 import { atom } from 'recoil'
-
-export type BoardInfo = {
-  id: string;
-  title: string;
-  text: string;
-  comment?: string[];
-  views?: number;
-  addDate: string;
-};
+import { BoardItemType } from '../../types/hook/HookType'
 
 
-export const boardListAtom = atom<BoardInfo[]>({
+export const boardListAtom = atom<BoardItemType[]>({
   key: 'boardList',
   default: [
     {

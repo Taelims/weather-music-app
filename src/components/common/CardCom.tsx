@@ -1,17 +1,17 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
-import { BoardInfo } from '../../types/hook/hookType'
+import { BoardItemType } from '../../types/hook/HookType'
 import { useBoardMutation } from '../../hooks/useBoardMutation'
 import { FaComment } from "react-icons/fa";
 import BoardDetailModal from '../board/BoardDetailModal'
 import { GrView } from "react-icons/gr";
 import Container from 'react-bootstrap/Container'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { boardModalNameAtom } from '../../store/atom/boardModalNameAtom'
 
 
-function CardCom({item} : {item :BoardInfo}) {
+function CardCom({item} : {item :BoardItemType}) {
   const [boardModalShow, setBoardModalShow] = useState<boolean>(false)
   const [boardModalName , setBoardModalName] = useRecoilState<string>(boardModalNameAtom)
   const {addPost , updatePost, deletePost } = useBoardMutation()

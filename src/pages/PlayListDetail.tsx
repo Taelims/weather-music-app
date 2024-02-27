@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { QueryClient, useQueryClient } from 'react-query'
-import { playListItem } from '../types/page/playListDetailType'
+import { PlayListItemType } from '../types/page/PlayListDetailType'
 import Button from 'react-bootstrap/Button';
 import { useRecoilState } from 'recoil'
-import { UserState } from '../types/state/stateType'
+import { UserAtomType } from '../types/state/AtomType'
 import { userAtom } from '../store/atom/userAtom'
 import styled from 'styled-components'
 import MyPliCom from '../components/userMain/MyPliCom'
@@ -20,15 +20,15 @@ function PlayListDetail() {
   const [videoId, setVideoId] = useState<string>('');
   const params = useParams<string>();
   const queryClient: QueryClient = useQueryClient();
-  const playList : playListItem[] = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
-  const [user, setUser] = useRecoilState<UserState>(userAtom);
+  const playList : PlayListItemType[] = queryClient.getQueryData( params.id === 'weather' ? 'weatherVideo' :['categoryVideo' , `${params.id}`] )!;
+  const [user, setUser] = useRecoilState<UserAtomType>(userAtom);
 
   const handleSongClick = (songVideoId : string) => {
     setVideoId(songVideoId);
   };
 
   const addPli = (index : number) =>{
-    setUser((prevData : UserState): UserState => ({
+    setUser((prevData : UserAtomType): UserAtomType => ({
       ...prevData,
       playList: [
         ...prevData.playList!,
@@ -42,7 +42,7 @@ function PlayListDetail() {
   }
 
   const buttonCheck = (targetId : string) =>{
-    let foundVideo : playListItem = user.playList?.find(video => video.videoId === targetId)!;
+    let foundVideo : PlayListItemType = user.playList?.find(video => video.videoId === targetId)!;
     return foundVideo;
   }
 
@@ -75,7 +75,7 @@ function PlayListDetail() {
           <div className="song-list-area">
             <ListGroup as="ul" className='song-list'>
               {
-                playList?.map((item: playListItem, index: number)=>(
+                playList?.map((item: PlayListItemType, index: number)=>(
                   <ListGroup.Item className= 'list-group-item' key={index} as="li">
                     <div onClick={() => handleSongClick(item.videoId)}>
                       <img

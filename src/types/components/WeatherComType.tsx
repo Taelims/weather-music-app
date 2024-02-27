@@ -1,4 +1,4 @@
-export type weatherInfo = {
+export type WeatherType = {
   temp : number
   weather : string
 }

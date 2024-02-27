@@ -3,19 +3,19 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { ChangeEvent, useState } from 'react'
 import { useSignInUp } from '../../hooks/useSignInUp'
-import { formInfo, ModalProps } from '../../types/components/ModalComType'
+import { LogInFormType, LogInModalPropsType } from '../../types/components/ModalComType'
 
 
-function ModalCom({ formName, onHide, signModalShow } : ModalProps) {
+function ModalCom({ formName, onHide, signModalShow } : LogInModalPropsType) {
   const { login, createAccount } = useSignInUp()
-  const [formData, setFormData] = useState<formInfo>({
+  const [formData, setFormData] = useState<LogInFormType>({
     id : '',
     password: '',
   });
 
   const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
     const { name, value }:{ name: string; value: string; } = e.target;
-    setFormData((prevData : formInfo) => ({
+    setFormData((prevData : LogInFormType) => ({
       ...prevData,
       [name]: value,
     }));

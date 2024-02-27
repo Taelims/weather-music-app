@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { BoardInfo } from '../types/hook/hookType'
+import { BoardItemType } from '../types/hook/HookType'
 import icAxios from '../util/icAxios'
-import { BoardFormInfo } from '../types/components/BoardDetailModalComType'
 
 export const useBoardMutation = () => {
   const queryClient = useQueryClient();
 
-  const addPost = useMutation((item:BoardInfo) =>
+  const addPost = useMutation((item:BoardItemType) =>
     icAxios.post(`/api/board/create` , item),{
       onSuccess: ()=>{
         queryClient.invalidateQueries('boardList');
@@ -17,7 +16,7 @@ export const useBoardMutation = () => {
     }
   )
 
-  const updatePost = useMutation((item:BoardInfo) =>
+  const updatePost = useMutation((item:BoardItemType) =>
     icAxios.post(`/api/board/update` , item),{
       onSuccess: ()=>{
         queryClient.invalidateQueries('boardList');

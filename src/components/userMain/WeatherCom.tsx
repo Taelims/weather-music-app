@@ -2,10 +2,10 @@ import React from 'react'
 import Card from 'react-bootstrap/Card';
 import cleardayImage from '../../asset/clearday.jpg';
 import rainydayImage from '../../asset/rainy.jpg';
-import { weatherInfo } from '../../types/components/weatherComType'
+import { WeatherType } from '../../types/components/WeatherComType'
 
 
-function WeatherCom({data}: {data : weatherInfo}) {
+function WeatherCom({data}: {data : WeatherType}) {
   return (
     <Card style={{
       width: '30rem', height:'20rem',

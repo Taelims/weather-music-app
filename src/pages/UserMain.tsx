@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import TabCom from '../components/userMain/TabCom'
 import { useGetWeatherVideo } from '../hooks/useGetWeatherVideo'
 import { useGetWeather } from '../hooks/useGetWeather'
-import { weatherQuery, weatherVideoQuery } from '../types/page/userMainType'
+import { WeatherQueryType, WeatherVideoQueryType } from '../types/page/UserMainType'
 import { useAuth } from '../hooks/useAuth'
 
 
@@ -26,8 +26,8 @@ const TabContainer = styled.div`
 
 function UserMain() {
   useAuth()
-  const weatherData: weatherQuery = useGetWeather()
-  const weatherVideoData: weatherVideoQuery = useGetWeatherVideo()
+  const weatherData: WeatherQueryType = useGetWeather()
+  const weatherVideoData: WeatherVideoQueryType = useGetWeatherVideo()
 
   return (
     weatherData.data &&

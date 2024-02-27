@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { userAtom } from '../store/atom/userAtom'
-import { UserState } from '../types/state/stateType'
-import { loginRes } from '../types/components/ModalComType'
+import { UserAtomType } from '../types/state/AtomType'
 
 
 export const useSignInUp = () => {
-  const [user, setUser] = useRecoilState<UserState>(userAtom);
+  const setUser = useSetRecoilState<UserAtomType>(userAtom);
   const login = async (id: string, password: string) => {
-    const response: loginRes = await axios.post('/api/login', { id, password });
-    const token : string = response.data.token;
+    const data: {token : string} = await axios.post('/api/login', { id, password });
+    const token : string = data.token;
     localStorage.setItem('token', token);
     setUser({ id: id , playList: []})
   };

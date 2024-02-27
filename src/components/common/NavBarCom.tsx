@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 import ModalCom from './ModalCom'
 import { useRecoilState } from 'recoil'
 import { userAtom } from '../../store/atom/userAtom'
-import { UserState } from '../../types/state/stateType'
+import { UserAtomType } from '../../types/state/AtomType'
 import { Badge } from 'react-bootstrap'
 import { modalShowAtom } from '../../store/atom/modalShowAtom'
 import BoardDetailModal from '../board/BoardDetailModal'
@@ -18,7 +18,7 @@ function NavBarCom() {
   const [signModalShow, setSignModalShow] = useRecoilState<boolean>(modalShowAtom)
   const [boardModalShow, setBoardModalShow] = useState<boolean>(false)
   const [formName, setformName] = useState<string>('');
-  const [user, setUser] = useRecoilState<UserState>(userAtom);
+  const [user, setUser] = useRecoilState<UserAtomType>(userAtom);
   const location = useLocation();
 
   const handleLogout = () => {

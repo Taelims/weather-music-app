@@ -1,23 +1,17 @@
-import { BoardInfo } from '../hook/hookType'
+import { BoardItemType } from '../hook/HookType'
 
 export interface BoardPropsType {
-  item?: BoardInfo
+  item?: BoardItemType
   onHide: () => void;
   boardModalShow: boolean;
   boardModalName: string
 }
 
-export interface BoardFormInfo {
+export interface BoardFormType {
   id : string,
   title : string,
   text: string,
   addDate: string,
   comment?: string[]
   newComment?: string,
-}
-
-export type loginRes = {
-  data : {
-    token : string
-  }
 }

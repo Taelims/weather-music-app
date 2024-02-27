@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { BoardFormInfo, BoardPropsType } from '../../types/components/BoardDetailModalComType'
+import { BoardFormType, BoardPropsType } from '../../types/components/BoardDetailModalComType'
 import { useBoardMutation } from '../../hooks/useBoardMutation'
 import uuid from 'react-uuid'
 import moment from 'moment'
@@ -15,7 +15,7 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
     }
   },[item, boardModalName])
 
-  const [formData, setFormData] = useState<BoardFormInfo>({
+  const [formData, setFormData] = useState<BoardFormType>({
     id : '',
     title : '',
     text: '',
@@ -27,7 +27,7 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
 
   const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
     const { name, value }:{ name: string; value: string; } = e.target;
-    setFormData((prevData : BoardFormInfo) => ({
+    setFormData((prevData : BoardFormType) => ({
       ...prevData,
       [name]: value,
       id : boardModalName === 'create' ? uuid() : prevData.id,
@@ -42,7 +42,7 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
       }else if(boardModalName === 'update'){
         await updatePost(formData)
       }else if(boardModalName === 'view'){
-        const updatedFormData : BoardFormInfo = {
+        const updatedFormData : BoardFormType = {
           ...formData,
           comment: formData.comment ? [...formData.comment!, formData.newComment!] : [formData.newComment!],
           newComment: ''

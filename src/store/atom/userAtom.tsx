@@ -1,13 +1,13 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { UserState } from '../../types/state/stateType'
+import { UserAtomType } from '../../types/state/AtomType'
 
 const { persistAtom } = recoilPersist({
   key: 'user',
   storage: localStorage,
 });
 
-export const userAtom = atom<UserState>({
+export const userAtom = atom<UserAtomType>({
   key: 'userAtom',
   default: {
     id: '' ,
