@@ -11,6 +11,7 @@ import { Badge } from 'react-bootstrap'
 import { modalShowAtom } from '../../store/atom/modalShowAtom'
 import BoardDetailModal from '../board/BoardDetailModal'
 import { boardModalNameAtom } from '../../store/atom/boardModalNameAtom'
+import Swal from "sweetalert2";
 
 
 function NavBarCom() {
@@ -29,6 +30,19 @@ function NavBarCom() {
     })
   };
 
+  const handleCreate = async () =>{
+    if(user.id){
+      return setBoardModalShow(true) , setBoardModalName('create')
+    }else {
+      await Swal.fire({
+        icon: 'warning',
+        title: '인증 오류',
+        text: '로그인을 해주세요',
+      })
+      return setSignModalShow(true), setformName('login')
+    }
+  }
+
   return (
     <Navbar collapseOnSelect expand="lg">
       <Container>
@@ -39,7 +53,7 @@ function NavBarCom() {
             <Link to='/board' style={{color : 'white', margin: 'auto' }} >Pli Board</Link>
             {
               location.pathname === '/board' &&
-              <Nav.Link className="text-white" onClick={()=>{ return setBoardModalShow(true) , setBoardModalName('create')}} >
+              <Nav.Link className="text-white" onClick={handleCreate} >
               새 글쓰기
               </Nav.Link>
             }

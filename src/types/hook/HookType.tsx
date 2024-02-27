@@ -20,3 +20,9 @@ export interface BoardQueryType {
   isError : boolean,
   data?: BoardItemType[]
 }
+
+export interface LoginRes {
+  data: {
+    token:string
+  }
+}

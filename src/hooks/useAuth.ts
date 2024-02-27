@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil'
 import { userAtom } from '../store/atom/userAtom'
 import { UserAtomType } from '../types/state/AtomType'
 import { modalShowAtom } from '../store/atom/modalShowAtom'
+import Swal from 'sweetalert2'
 
 
 export const useAuth = () => {
@@ -25,6 +26,11 @@ export const useAuth = () => {
         setUser({
           id : '' ,
           playList: []
+        })
+        await Swal.fire({
+          icon: 'warning',
+          title: '인증 오류',
+          text: '로그인을 해주세요',
         })
         setShow(true)
       }
