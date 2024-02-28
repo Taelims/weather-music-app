@@ -6,6 +6,11 @@ import { BoardFormType, BoardPropsType } from '../../types/components/BoardDetai
 import { useBoardMutation } from '../../hooks/useBoardMutation'
 import uuid from 'react-uuid'
 import moment from 'moment'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { userAtom } from '../../store/atom/userAtom'
+import Swal from 'sweetalert2'
+import { modalShowAtom } from '../../store/atom/modalShowAtom'
+import BoardComment from './BoardComment'
 
 
 function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : BoardPropsType) {
@@ -15,13 +20,16 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
     }
   },[item, boardModalName])
 
+  const user = useRecoilValue(userAtom)
+  const loginModalShow = useSetRecoilState(modalShowAtom)
+
   const [formData, setFormData] = useState<BoardFormType>({
     id : '',
     title : '',
     text: '',
     addDate: '',
-    comment: [],
-    newComment: '',
+    commentList: [],
+    newComment: {id: '', userId: '', content: ''},
   });
   const {addPost, updatePost } = useBoardMutation()
 
@@ -30,24 +38,30 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
     setFormData((prevData : BoardFormType) => ({
       ...prevData,
       [name]: value,
+      newComment: boardModalName === 'view' ? {id: uuid(), userId: user.id, content: value} : undefined,
       id : boardModalName === 'create' ? uuid() : prevData.id,
       addDate : boardModalName === 'create' ? moment().format('YYYY-MM-DD') : prevData.addDate
     }));
   };
 
+  const handleClick = async () =>{
+    if(!user.id){
+      await Swal.fire({
+        icon: 'warning',
+        title: '인증 오류',
+        text: '로그인을 해주세요',
+      })
+      return loginModalShow(true)
+    }
+  }
+
   const submitHandler = async () => {
+    console.log(formData)
     try {
       if(boardModalName === 'create'){
         await addPost(formData)
       }else if(boardModalName === 'update'){
         await updatePost(formData)
-      }else if(boardModalName === 'view'){
-        const updatedFormData : BoardFormType = {
-          ...formData,
-          comment: formData.comment ? [...formData.comment!, formData.newComment!] : [formData.newComment!],
-          newComment: ''
-        };
-        await updatePost(updatedFormData)
       }
     } catch (error) {
       console.error(error);
@@ -57,7 +71,7 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
       title : '',
       text: '',
       addDate: '',
-      newComment: '',
+      newComment: {id: '', userId: '', content: ''},
     })
     onHide()
   };
@@ -91,30 +105,25 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
           value={formData?.text}
           onChange={handleChange}
           name='text'
-        />
+        /><br/>
         {
         boardModalName === 'view' &&
-          <>
-          <Form.Label>댓글</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={2}
-            value={formData?.newComment}
-            onChange={handleChange}
-            name='newComment'
-          />
-          {
-            formData?.comment?.map((comm: string, idx: number)=>{
-              return <div key={idx}>{comm}</div>
-            })
-          }
-        </>
+         <BoardComment
+           formData={formData}
+           handleClick={handleClick}
+           handleChange={handleChange}
+           user={user}
+           updatePost={updatePost}
+         />
         }
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={submitHandler}>Submit</Button>
-        <Button onClick={onHide}>Close</Button>
-      </Modal.Footer>
+      {
+        boardModalName !== 'view' &&
+        <Modal.Footer>
+          <Button onClick={submitHandler}>Submit</Button>
+          <Button onClick={onHide}>Close</Button>
+        </Modal.Footer>
+      }
     </Modal>
   );
 }

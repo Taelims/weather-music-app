@@ -23,10 +23,10 @@ function ModalCom({ formName, onHide, signModalShow } : LogInModalPropsType) {
 
   const submitHandler = async () => {
     try {
-      if(formName === 'login'){
-        await login( formData.id, formData.password );
-      }else {
+      if(formName === 'create'){
         await createAccount( formData.id, formData.password );
+      }else {
+        await login( formData.id, formData.password );
       }
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ function ModalCom({ formName, onHide, signModalShow } : LogInModalPropsType) {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           {
-            formName === 'login' ? 'Login' : 'New Account'
+            formName === 'create' ? 'New Account' : 'Login'
           }
         </Modal.Title>
       </Modal.Header>

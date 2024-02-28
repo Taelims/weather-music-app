@@ -12,6 +12,12 @@ export interface BoardFormType {
   title : string,
   text: string,
   addDate: string,
-  comment?: string[]
-  newComment?: string,
+  commentList?: comment[]
+  newComment?: comment,
+}
+
+export type comment = {
+  id: string,
+  userId?: string,
+  content: string,
 }

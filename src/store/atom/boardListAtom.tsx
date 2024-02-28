@@ -7,7 +7,7 @@ export const boardListAtom = atom<BoardItemType[]>({
   default: [
     {
       addDate: '',
-      comment: [],
+      commentList: [],
       id: '',
       text: '',
       title: '',

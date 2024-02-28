@@ -21,10 +21,17 @@ let boardData = [
     id : '1',
     title: 'title',
     text: 'textextext',
-    comment: [
-      'comment1-1',
-      'comment1-2',
-      'comment1-3',
+    commentList: [
+      {
+        id : 1,
+        userId: 'test',
+        content: 'comment1'
+      },
+      {
+        id : 2,
+        userId: 'test2',
+        content: 'comment2'
+      },
     ],
     views: 1,
     addDate: '2024-02-23'
@@ -33,7 +40,13 @@ let boardData = [
     id : '2',
     title: 'title2',
     text: 'textextext',
-    comment: ['comment2'],
+    commentList: [
+      {
+      id : 3,
+      userId: 'test33',
+      content: 'comment33'
+      },
+    ],
     views: 2,
     addDate: '2024-02-21'
   },
@@ -41,26 +54,32 @@ let boardData = [
     id : '3',
     title: 'title3',
     text: 'textextext',
-    comment: ['comment3'],
+    commentList: [
+      {
+        id : 4,
+        userId: 'test45',
+        content: 'comment5'
+      },
+    ],
     views: 3,
     addDate: '2024-02-15'
   },
-  {
-    id : '4',
-    title: 'title4',
-    text: 'textextext',
-    comment: ['comment4'],
-    views: 0,
-    addDate: '2024-02-27'
-  },
-  {
-    id : '5',
-    title: 'title5',
-    text: 'textextext',
-    comment: ['comment5'],
-    views: 2,
-    addDate: '2024-02-23'
-  }
+  // {
+  //   id : '4',
+  //   title: 'title4',
+  //   text: 'textextext',
+  //   comment: ['comment4'],
+  //   views: 0,
+  //   addDate: '2024-02-27'
+  // },
+  // {
+  //   id : '5',
+  //   title: 'title5',
+  //   text: 'textextext',
+  //   comment: ['comment5'],
+  //   views: 2,
+  //   addDate: '2024-02-23'
+  // }
 ]
 
 

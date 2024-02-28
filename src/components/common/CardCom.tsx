@@ -37,7 +37,7 @@ function CardCom({item} : {item :BoardItemType}) {
             {item.text}
           </Card.Text>
           <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <Card.Text><GrView /> {item.views}  <FaComment/>  {item.comment?.length} </Card.Text>
+          <Card.Text><GrView /> {item.views}  <FaComment/>  {item.commentList?.length} </Card.Text>
           <Card.Text style={{fontSize: '0.95rem'}}> 등록일: {item.addDate} </Card.Text>
           </div>
           <Button variant="primary" onClick={(e)=>{

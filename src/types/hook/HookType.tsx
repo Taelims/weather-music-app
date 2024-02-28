@@ -1,4 +1,5 @@
 import { VideoItemType } from '../components/PlayListComType'
+import { comment } from '../components/BoardDetailModalComType'
 
 export interface VideoQueryType {
   isLoading : boolean,
@@ -6,11 +7,11 @@ export interface VideoQueryType {
   data?: VideoItemType[]
 }
 
-export type BoardItemType = {
+export interface BoardItemType {
   id: string,
   title : string,
   text : string
-  comment?: string[]
+  commentList?: comment[]
   views?: number,
   addDate: string,
 }
