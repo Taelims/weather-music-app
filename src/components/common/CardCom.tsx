@@ -14,7 +14,7 @@ import { boardModalNameAtom } from '../../store/atom/boardModalNameAtom'
 function CardCom({item} : {item :BoardItemType}) {
   const [boardModalShow, setBoardModalShow] = useState<boolean>(false)
   const [boardModalName , setBoardModalName] = useRecoilState<string>(boardModalNameAtom)
-  const {addPost , updatePost, deletePost } = useBoardMutation()
+  const {deletePost} = useBoardMutation()
 
   const handleDelete = async (id : any) => {
     try {

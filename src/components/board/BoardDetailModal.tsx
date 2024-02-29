@@ -113,7 +113,6 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
            handleClick={handleClick}
            handleChange={handleChange}
            user={user}
-           updatePost={updatePost}
          />
         }
       </Modal.Body>

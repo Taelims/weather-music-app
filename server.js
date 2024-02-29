@@ -64,22 +64,6 @@ let boardData = [
     views: 3,
     addDate: '2024-02-15'
   },
-  // {
-  //   id : '4',
-  //   title: 'title4',
-  //   text: 'textextext',
-  //   comment: ['comment4'],
-  //   views: 0,
-  //   addDate: '2024-02-27'
-  // },
-  // {
-  //   id : '5',
-  //   title: 'title5',
-  //   text: 'textextext',
-  //   comment: ['comment5'],
-  //   views: 2,
-  //   addDate: '2024-02-23'
-  // }
 ]
 
 
@@ -186,8 +170,36 @@ app.delete('/api/board/delete/:id', (req, res) => {
   }
 });
 
+// Comment Delete
+app.delete('/api/board/comment/delete/:id', (req, res)=>{
+  const { id } = req.params;
+  if (id !== -1) {
+    boardData = boardData.map(item => ({
+      ...item,
+      commentList: item.commentList.filter(comment => comment.id !== id)
+    }))
+    res.status(200).json({ success: true, message: 'Item deleted successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+})
+
+// Comment add
+app.post('/api/board/comment/add', (req, res)=>{
+  // const { id } = req.params;
+  console.log(req.body)
+  const index = boardData.findIndex(item => item.id === req.body.id);
+
+  if (index !== -1) {
+    boardData[index].commentList.push(req.body.newComment)
+    res.status(200).json({ success: true, message: 'Item create successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+})
 
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/build/index.html'));
-});
+
+
+
+
