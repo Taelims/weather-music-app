@@ -58,7 +58,7 @@ function CardCom({item} : {item :BoardItemType}) {
           </div>
 
           <Button variant="primary" onClick={clickUpdate}>수정</Button>
-          <Button variant="secondary" onClick={(e)=> {clickDelete(e)} }>삭제</Button>
+          <Button variant="secondary" onClick={async (e)=> {await clickDelete(e)} }>삭제</Button>
         </Card.Body>
       </Card>
       <BoardDetailModal
