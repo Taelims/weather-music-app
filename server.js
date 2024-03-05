@@ -198,6 +198,21 @@ app.post('/api/board/comment/add', (req, res)=>{
   }
 })
 
+//plusViews
+app.post('/api/board/views/:id', (req, res)=>{
+  const { id } = req.params;
+  console.log(id)
+  const index = boardData.findIndex(item => item.id === id);
+  console.log(index)
+
+  if (index !== -1) {
+    boardData[index].views ++
+    res.status(200).json({ success: true, message: 'Item create successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+})
+
 
 
 
