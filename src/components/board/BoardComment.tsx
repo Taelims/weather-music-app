@@ -6,6 +6,7 @@ import { useBoardCommentMutation } from '../../hooks/useBoardCommentMutation'
 
 interface BoardCommentPropsType {
   formData : BoardFormType
+  setFormData: React.Dispatch<React.SetStateAction<BoardFormType>>
   commentList?: comment[];
   newComment?: comment;
   handleClick: () => void;
@@ -13,9 +14,10 @@ interface BoardCommentPropsType {
   user: UserAtomType;
 }
 
-function BoardComment({ formData, handleClick, handleChange, user } : BoardCommentPropsType) {
-  const {deleteCommentPost, addCommentPost} = useBoardCommentMutation()
-  const [isUpdate , setIsUpdate] = useState<boolean>(false)
+function BoardComment({ formData, handleClick, handleChange, user, setFormData } : BoardCommentPropsType) {
+  const {deleteCommentPost, addCommentPost, updateCommentPost} = useBoardCommentMutation()
+  const [isUpdate , setIsUpdate] = useState<number>(0)
+  const [updateComment , setUpdateComment] = useState<string>('')
 
   const addCommentHandler = async ()=>{
     if(!formData?.newComment?.content) return
@@ -28,14 +30,20 @@ function BoardComment({ formData, handleClick, handleChange, user } : BoardComme
   }
 
    const updateCommentHandler = async (idx : number)=>{
-    console.log(idx)
-
-  //   try {
-  //     await addCommentPost(formData)
-  //     formData.newComment = {id: '', userId: '', content: ''}
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
+    if(formData?.commentList){
+      if(isUpdate === idx){
+        setUpdateComment(formData?.commentList[idx]?.content);
+        try {
+          await updateCommentPost({ id: formData?.commentList[idx].id, content : updateComment })
+          formData.newComment = {id: '', userId: '', content: ''}
+        } catch (error) {
+          console.error(error);
+        }
+      }else {
+        setIsUpdate(idx)
+        setUpdateComment(formData?.commentList[idx]?.content);
+      }
+    }
   }
 
   const deleteCommentHandler = async (idx : number)=>{
@@ -47,6 +55,16 @@ function BoardComment({ formData, handleClick, handleChange, user } : BoardComme
       console.error(error);
     }
   }
+
+  const commentChange = (e : any, comm: comment) => {
+    setUpdateComment(e.target.value)
+    // setFormData((prevState)=>({
+    //   ...prevState,
+    //   commentList : formData?.commentList?.map((item)=>
+    //     item.id === comm.id ? [...item, content : e.target.value] : item
+    //   )
+    // }))
+  };
 
   return (
     <>
@@ -67,10 +85,25 @@ function BoardComment({ formData, handleClick, handleChange, user } : BoardComme
       {formData?.commentList?.map((comm: comment, idx: number) => {
         return (
           <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', margin: '5px' }}>
-            <div>
-              {comm?.userId}: {comm?.content}
-            </div>
-            {comm?.userId === user.id && (
+            {
+              isUpdate === idx  ?
+                <>
+                  {comm?.userId}:
+                  <Form.Control
+                    as="textarea"
+                    rows={1}
+                    value={updateComment}
+                    onClick={handleClick}
+                    onChange={(e)=>{commentChange(e, comm)}}
+                    name="commentList" />
+                </>
+                :
+                <>
+                  {comm?.userId}: {comm?.content}
+                </>
+            }
+            {
+              comm?.userId === user.id &&
               <div>
                 <Button style={{ fontSize: '12px' }} onClick={()=>updateCommentHandler(idx)} >
                   수정
@@ -79,7 +112,7 @@ function BoardComment({ formData, handleClick, handleChange, user } : BoardComme
                   삭제
                 </Button>
               </div>
-            )}
+            }
           </div>
         );
       })}

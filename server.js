@@ -198,6 +198,20 @@ app.post('/api/board/comment/add', (req, res)=>{
   }
 })
 
+// Comment update
+app.post('/api/board/comment/update', (req, res)=>{
+  console.log(req.body)
+
+  if (req.body) {
+    boardData.commentList = boardData.commentList.map((item)=>
+      item.id === req.body.id ? {...req.body} : item
+    )
+    res.status(200).json({ success: true, message: 'Item create successfully' });
+  } else {
+    res.status(404).json({ success: false, message: 'Item not found' });
+  }
+})
+
 //plusViews
 app.post('/api/board/views/:id', (req, res)=>{
   const { id } = req.params;

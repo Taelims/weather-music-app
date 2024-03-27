@@ -56,7 +56,6 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
   }
 
   const submitHandler = async () => {
-    console.log(formData)
     try {
       if(boardModalName === 'create'){
         await addPost(formData)
@@ -109,6 +108,7 @@ function BoardDetailModal({ item, onHide, boardModalShow, boardModalName } : Boa
         {
         boardModalName === 'view' &&
          <BoardComment
+           setFormData={setFormData}
            formData={formData}
            handleClick={handleClick}
            handleChange={handleChange}
